@@ -112,6 +112,7 @@ export default {
         setTimeout(() => {
           this.containerState = "login";
         }, 500);
+        // TODO 关闭弹窗清除输入框数据
       }
     },
   },

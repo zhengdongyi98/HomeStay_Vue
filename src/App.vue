@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <container></container>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-  import container from "./components/content/container"
   export default {
     name: 'App',
     components: {
-      container
     }
   }
 </script>

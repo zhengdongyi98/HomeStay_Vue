@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Loading, Message } from "element-ui";
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded; charset=UTF-8";
+const baseUrl = "http://localhost/homestay";
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]
@@ -9,7 +11,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 export function get(url, params) {
   return new Promise((resolve, reject) => {
     axios
-      .get(url, {
+      .get(`${baseUrl}${url}`, {
         params: params,
       })
       .then((res) => {
@@ -38,7 +40,7 @@ export function get(url, params) {
 export function post(url, params) {
   return new Promise((resolve, reject) => {
     axios
-      .post(url, params)
+      .post(`${baseUrl}${url}`, params)
       .then((res) => {
         if (res.data.state !== "1") {
           Message.error({

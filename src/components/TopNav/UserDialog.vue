@@ -65,7 +65,6 @@
 </template>
 <script>
 import { login, register } from "../../service/user";
-import * as qs from "qs";
 export default {
   name: "UserDialog",
   data() {
@@ -89,9 +88,9 @@ export default {
   methods: {
     async userLogin() {
       const { userName, password } = this;
-      const data = await login({ userName,password});
+      const data = await login({ userName, password });
       if (data) {
-        console.log(data)
+        console.log(data);
         this.handleUserDialogShow();
       }
     },

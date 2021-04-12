@@ -1,76 +1,64 @@
 <template>
-  <el-row >
-    <el-col :span="8" v-for="(o, index) in 3" :key="o" :offset="index > 0 ? 1 : 0">
-      <el-card  :body-style="{ padding: '0px' }">
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-             class="image">
-        <div style="padding: 10px;">
-          <span>好吃的汉堡</span>
-          <div class="bottom clearfix">
-            <time class="time">{{ currentDate }}</time>
-            <el-button type="text" class="button">操作按钮</el-button>
-          </div>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row>
-
-
+  <div class="card-container">
+    <img
+      style="border-radius: 4px; cursor: pointer"
+      :src="cardData.roomImages[0]"
+      class="image"
+      width="100%"
+    />
+    <div class="text-container">
+      <span class="category">
+        {{ cardData.category }}·{{ cardData.type }}·{{ cardData.capacity }}张床
+      </span>
+      <div class="name">{{ cardData.roomName }}</div>
+      <div class="price">¥{{ cardData.basePrice }}</div>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "Rooms",
-    data() {
-      return {
-        currentDate: new Date()
-      };
-    }
-  }
+export default {
+  name: "Rooms",
+  data() {
+    return {
+      currentDate: new Date(),
+    };
+  },
+  props: {
+    cardData: {
+      type: Object,
+    },
+  },
+  methods: {},
+};
 </script>
 
 <style scoped>
-  .el-row {
-    width: 1032px;
-    margin: 0 auto;
+.card-container {
+  height: 380px;
+  width: 100%;
+}
 
-  }
-
-  .el-col {
-    width: 30% !important;
-  }
-
-  .el-card {
-    padding-top: 20px
-  }
-
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both
-  }
+.text-container {
+  cursor: pointer;
+  word-wrap: break-word;
+  font-family: Circular, PingFang-SC, "Hiragino Sans GB", 微软雅黑,
+    "Microsoft YaHei", "Heiti SC";
+  vertical-align: middle;
+  line-height: 1.33333em;
+  font-weight: 500;
+}
+.category {
+  font-size: 12px;
+  color: rgb(57, 87, 106);
+}
+.name {
+  font-size: 16px;
+  color: rgb(72, 72, 72);
+}
+.price {
+  cursor: default;
+  font-size: 16px;
+  color: rgb(72, 72, 72);
+}
 </style>

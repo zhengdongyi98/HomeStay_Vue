@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Loading, Message } from "element-ui";
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]
@@ -13,7 +13,7 @@ export function get(url, params) {
         params: params,
       })
       .then((res) => {
-        if (res.data.status !== 1) {
+        if (res.data.state !== 1) {
           Message.error({
             showClose: true,
             message: res.data.msg,
@@ -40,7 +40,7 @@ export function post(url, params) {
     axios
       .post(url, params)
       .then((res) => {
-        if (res.data.status !== 1) {
+        if (res.data.state !== "1") {
           Message.error({
             showClose: true,
             message: res.data.msg,

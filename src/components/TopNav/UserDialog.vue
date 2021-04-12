@@ -7,7 +7,7 @@
   >
     <div slot="title" class="dialog-title" style="text-align: start">
       <span>{{
-        containerState === "login" ? "登陆民宿预订平台" : "注册"
+        containerState === "login" ? "登录民宿预订平台" : "注册"
       }}</span>
     </div>
     <!-- 登陆 -->
@@ -65,6 +65,7 @@
 </template>
 <script>
 import { login, register } from "../../service/user";
+import * as qs from "qs";
 export default {
   name: "UserDialog",
   data() {
@@ -88,8 +89,9 @@ export default {
   methods: {
     async userLogin() {
       const { userName, password } = this;
-      const data = await login({ userName, password });
+      const data = await login({ userName,password});
       if (data) {
+        console.log(data)
         this.handleUserDialogShow();
       }
     },

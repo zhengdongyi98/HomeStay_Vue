@@ -1,8 +1,8 @@
 <template>
   <div style="display: flex; margin-bottom: 20px">
     <div
-      v-for="city in cityList"
-      :key="city"
+      v-for="(city, index) in cityList"
+      :key="index"
       @click="setCurrentSelectCity(city)"
       :class="
         currentSelectCity === city
@@ -20,7 +20,16 @@ export default {
   name: "CitySelect",
   data() {
     return {
-      cityList: ["上海", "苏州", "杭州", "厦门"],
+      cityList: [
+        "上海",
+        "苏州",
+        "杭州",
+        "厦门",
+        "上海",
+        "苏州",
+        "杭州",
+        "厦门",
+      ],
       currentSelectCity: "",
     };
   },

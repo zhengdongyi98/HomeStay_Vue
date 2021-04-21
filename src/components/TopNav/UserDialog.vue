@@ -55,8 +55,8 @@
           style="margin-top: 20px"
         ></el-input>
         <el-radio-group style="margin-top: 20px" v-model="gender">
-          <el-radio v-model="gender" :label=1>男</el-radio>
-          <el-radio v-model="gender" :label=0>女</el-radio>
+          <el-radio v-model="gender" :label="1">男</el-radio>
+          <el-radio v-model="gender" :label="0">女</el-radio>
         </el-radio-group>
         <el-button
           @click="userRegister"
@@ -98,11 +98,11 @@ export default {
       if (data) {
         console.log(data);
         //写入token
-        this.$store.commit('set_token', "1");
-        if (this.$store.state.token){
-          this.$router.push("/");//写入token，跳转回首页
-        }else {
-          this.$router.push("/");//未登录暂时不处理
+        this.$store.commit("set_token", "1");
+        if (this.$store.state.token) {
+          this.$router.push("/"); //写入token，跳转回首页
+        } else {
+          this.$router.push("/"); //未登录暂时不处理
         }
         this.handleUserDialogShow();
       }
@@ -117,13 +117,13 @@ export default {
       });
       this.handleUserDialogShow();
     },
-    resetData(){
-      this.userName= ""
-      this.password= ""
-      this.email= ""
-      this.phone= ""
-      this.gender= 1
-    }
+    resetData() {
+      this.userName = "";
+      this.password = "";
+      this.email = "";
+      this.phone = "";
+      this.gender = 1;
+    },
   },
   watch: {
     dialogVisible: function (newVal, oldVal) {

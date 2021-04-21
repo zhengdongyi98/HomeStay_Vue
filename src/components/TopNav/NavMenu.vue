@@ -6,10 +6,12 @@
     @select="handleSelect"
   >
     <div style="float: left">
-      <el-menu-item>
+      <el-menu-item @click="restartIndex">
+<!--        点击后进主界面-->
         <el-button type="text">民宿预订平台</el-button>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="maxSearch">
+<!--        最大搜索-->
         <el-input
           type="text"
           placeholder="按城市、地址、地标搜索"
@@ -19,10 +21,17 @@
       </el-menu-item>
     </div>
     <div style="float: right" id="rightDiv">
-      <el-menu-item index="1">出租房源</el-menu-item>
+      <el-menu-item index="1" >出租房源</el-menu-item>
       <el-menu-item index="2">历史足迹</el-menu-item>
       <!-- <el-menu-item index="3" @click="handleUserDialogShow">注册</el-menu-item> -->
-      <el-menu-item index="4" @click="handleUserDialogShow">登录</el-menu-item>
+      <el-menu-item index="3" @click="handleUserDialogShow"
+                    v-if="$store.state.token==null">登录</el-menu-item>
+      <el-submenu index="4" v-if="$store.state.token!=null">
+        <template slot="title">个人</template>
+        <el-menu-item index="4-1">选项1</el-menu-item>
+        <el-menu-item index="4-2">选项2</el-menu-item>
+        <el-menu-item index="4-3">选项3</el-menu-item>
+      </el-submenu>
     </div>
     <UserDialog
       :dialogVisible="dialogVisible"
@@ -46,13 +55,19 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
+      //获取选择的位置
       console.log(key, keyPath);
     },
     handleUserDialogShow() {
       this.dialogVisible
         ? (this.dialogVisible = false)
         : (this.dialogVisible = true);
+
     },
+    restartIndex(){
+      // this.$router.push("/home");
+      this.$router.go(0);//点击按钮，刷新主页
+    }
   },
   components: { UserDialog },
 };
@@ -75,7 +90,7 @@ export default {
   /*padding: 0;*/
   /*margin: 0;*/
 }
-.el-menu-item {
+.el-menu-item,.el-submenu{
   height: 79px;
   font-weight: bold;
   font-size: 18px;

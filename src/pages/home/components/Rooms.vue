@@ -5,12 +5,13 @@
       :src="cardData.roomImages[0]"
       class="image"
       width="100%"
+      height="60%"
     />
     <div class="text-container">
       <span class="category">
         {{ cardData.category }}·{{ cardData.type }}·{{ cardData.capacity }}张床
       </span>
-      <div class="name">{{ cardData.roomName }}</div>
+      <div class="name" >{{ cardData.roomName }}</div>
       <div class="price">¥{{ cardData.basePrice }}</div>
     </div>
   </div>
@@ -50,15 +51,21 @@ export default {
 }
 .category {
   font-size: 12px;
+  font-weight: bolder;
   color: rgb(57, 87, 106);
 }
 .name {
+  height: 44px;
   font-size: 16px;
+  font-weight: bolder;
+  overflow:hidden;
   color: rgb(72, 72, 72);
 }
 .price {
+  margin-top: 5px;
   cursor: default;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bolder;
   color: rgb(72, 72, 72);
 }
 </style>

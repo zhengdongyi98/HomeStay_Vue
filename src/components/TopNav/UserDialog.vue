@@ -4,6 +4,7 @@
     :visible.sync="dialogVisible"
     :before-close="handleUserDialogShow"
     width="30%"
+    @close="resetData"
   >
     <div slot="title" class="dialog-title" style="text-align: start">
       <span>{{
@@ -53,8 +54,12 @@
           placeholder="手机"
           style="margin-top: 20px"
         ></el-input>
+        <el-radio-group style="margin-top: 20px" v-model="gender">
+          <el-radio v-model="gender" :label=1>男</el-radio>
+          <el-radio v-model="gender" :label=0>女</el-radio>
+        </el-radio-group>
         <el-button
-          @click="handleUserDialogShow"
+          @click="userRegister"
           type="primary"
           style="width: 100%; margin-top: 20px"
           >注册</el-button
@@ -74,6 +79,7 @@ export default {
       password: "",
       email: "",
       phone: "",
+      gender: 1,
     };
   },
   props: {
@@ -91,21 +97,33 @@ export default {
       const data = await login({ userName, password });
       if (data) {
         console.log(data);
+        //写入token
+        this.$store.commit('set_token', "1");
+        if (this.$store.state.token){
+          this.$router.push("/");//写入token，跳转回首页
+        }else {
+          this.$router.push("/");//未登录暂时不处理
+        }
         this.handleUserDialogShow();
       }
     },
     async userRegister() {
-      const { userName, password, email, phone } = this;
-      const data = await register({ userName, password, email, phone });
-      if (data) {
-        this.$message({
-          showClose: true,
-          message: "注册成功，请前往电子邮箱进行激活",
-          type: "success",
-        });
-        this.handleUserDialogShow();
-      }
+      const { userName, password, email, phone, gender } = this;
+      const data = await register({ userName, password, email, phone, gender });
+      this.$message({
+        showClose: true,
+        message: "注册成功，请前往电子邮箱进行激活",
+        type: "success",
+      });
+      this.handleUserDialogShow();
     },
+    resetData(){
+      this.userName= ""
+      this.password= ""
+      this.email= ""
+      this.phone= ""
+      this.gender= 1
+    }
   },
   watch: {
     dialogVisible: function (newVal, oldVal) {

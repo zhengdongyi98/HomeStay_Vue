@@ -3,13 +3,13 @@
     <el-container>
       <el-header style="height: 530px">
         <NavMenu></NavMenu>
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center">
           <div class="search-area"></div>
         </div>
       </el-header>
       <el-main style="display: flex; justify-content: center">
         <div style="width: 85%">
-          <div style="margin: 15px 0px 30px 0px;font-weight: bolder;">
+          <div style="margin: 15px 0px 30px 0px; font-weight: bolder">
             <h2>春季特惠房源</h2>
             <div>品质房源，低至 5 折</div>
           </div>
@@ -19,7 +19,9 @@
           <div class="main-card-container">
             <el-row :gutter="20">
               <el-col :span="8" v-for="(item, i) in roomList" :key="i">
-                <Rooms :cardData="item"></Rooms>
+                <div @click="jumpToRoomDetail(item.rId)">
+                  <Rooms :cardData="item"></Rooms>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -101,10 +103,14 @@ export default {
     async getData() {
       // 这里请求
       const res = await getAllRooms();
-      this.roomList = res.data
+      this.roomList = res.data;
     },
     setSelectCity(city) {
       this.selectCity = city;
+    },
+    jumpToRoomDetail(rId) {
+      console.log(rId);
+      this.$router.push(`/roomDetail?id=${rId}`);
     },
   },
   created() {
@@ -134,6 +140,5 @@ export default {
   background-color: white;
   width: 80%;
   height: 72px;
-
 }
 </style>

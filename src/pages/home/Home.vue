@@ -129,7 +129,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-header {
   background-image: url("../../assets/image/封面.jpg");
   background-repeat: no-repeat;

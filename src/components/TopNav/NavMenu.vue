@@ -1,4 +1,5 @@
 <template>
+  <div class="navRoot">
   <el-menu
     :default-active="activeIndex"
     class="el-menu-demo"
@@ -37,6 +38,7 @@
       :handleUserDialogShow="handleUserDialogShow"
     />
   </el-menu>
+  </div>
 </template>
 
 <script>
@@ -82,9 +84,9 @@ export default {
 
 <style scoped>
 .el-menu.el-menu--horizontal {
-  /*底部的线*/
-  border-bottom: hidden;
-}
+   /*底部的线*/
+   border-bottom: hidden;
+ }
 /*设置进入的样式*/
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
@@ -113,12 +115,10 @@ export default {
   border-bottom: 3px solid;
   border-bottom-color: white !important;
 }
-
 .el-menu-item.is-active {
   background: rgba(0, 0, 0, 0);
   color: white;
 }
-
 .el-input >>> .el-input__inner {
   /*vue组件编译后，会将 template 中的每个元素加入 [data-v-xxxx] 属性来确保 style scoped 仅本组件的元素而不会污染全局。
 一般还是不建议去除scoped，避免污染全局的样式。那就需要采用深度作用选择器*/
@@ -134,7 +134,6 @@ export default {
   width: 25px;
   height: auto;
 }
-
 .el-button {
   background-color: rgba(0, 0, 0, 0);
   color: white;

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <NavMenu></NavMenu>
+  <div>
     <div class="image-container" :style="`height:${windowHeight * 0.6}px`">
       <div style="width: 50%; height: 100%; float: left">
         <div
@@ -89,11 +91,23 @@
         </div>
       </div>
     </div>
-    {{ data.user.userName }}
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="详情" name="detail">详情</el-tab-pane>
+      <el-tab-pane label="评价" name="comments">评价</el-tab-pane>
+      <el-tab-pane label="可订日期" name="orderAble">可订日期</el-tab-pane>
+      <el-tab-pane label="位置" name="location">位置</el-tab-pane>
+      <el-tab-pane label="须知" name="notice">须知</el-tab-pane>
+      <el-tab-pane label="房东" name="host">房东</el-tab-pane>
+    </el-tabs>
+    <RoomDisplay :RoomDetailData="data"></RoomDisplay>
+
+  </div>
   </div>
 </template>
 
 <script>
+  import NavMenu from "../../components/TopNav/NavMenu"
+  import RoomDisplay from "../roomDetail/components/RoomDisplay"
 import { getRoomById } from "../../service/room";
 import { data } from "./data";
 export default {
@@ -109,19 +123,35 @@ export default {
     async fetchData() {
       const data = await getRoomById(this.$route.query.id);
       console.log(data); //这里请求获得房间详细数据
+      this.data = data.data
     },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
   },
   created() {
     this.fetchData();
   },
   watch: {},
-  components: {},
+  components: {NavMenu,RoomDisplay},
 };
 </script>
 
-<style>
+<style scoped>
+.navRoot >>> .el-menu-item,.el-submenu{
+  color: black!important;
+}
+.navRoot >>> .el-menu--horizontal .el-menu-item:not(.is-disabled):hover,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
+  color: black!important;
+}
+.navRoot >>> #rightDiv > .el-menu-item:hover {
+  border-bottom-color: black !important;
+}
+.navRoot >>> .el-button {
+  color: black
+}
 .image-container {
-  margin-top: 80px;
   background-color: black;
   width: 100%;
 }
@@ -131,5 +161,9 @@ export default {
 }
 .room-image:hover {
   transform: scale(1.05);
+}
+.el-tabs{
+  margin-left: 10%;
+  margin-right: 10%;
 }
 </style>

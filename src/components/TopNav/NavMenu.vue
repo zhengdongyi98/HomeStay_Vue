@@ -27,10 +27,9 @@
       <el-menu-item index="3" @click="handleUserDialogShow"
                     v-if="$store.state.token==null">登录</el-menu-item>
       <el-submenu index="4" v-if="$store.state.token!=null">
-        <template slot="title">个人</template>
-        <el-menu-item index="4-1">选项1</el-menu-item>
-        <el-menu-item index="4-2">选项2</el-menu-item>
-        <el-menu-item index="4-3">选项3</el-menu-item>
+        <template slot="title">我的</template>
+        <el-menu-item index="4-1">个人资料</el-menu-item>
+        <el-menu-item index="4-2" @click="Logout">注销</el-menu-item>
       </el-submenu>
     </div>
     <UserDialog
@@ -42,6 +41,7 @@
 
 <script>
 import UserDialog from "./UserDialog";
+import {logout} from "../../service/user";
 export default {
   name: "NavMenu",
   data() {
@@ -67,6 +67,13 @@ export default {
     restartIndex(){
       // this.$router.push("/home");
       this.$router.go(0);//点击按钮，刷新主页
+    },
+    async Logout(){//注销，重置token
+      const data =  await logout();
+      if (data){
+        this.$store.commit('del_token');
+        this.$router.go(0)
+      }
     }
   },
   components: { UserDialog },

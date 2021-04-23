@@ -97,10 +97,16 @@ export default {
       const data = await login({ userName, password });
       if (data) {
         console.log(data);
+        let token;
+        let tokenId;
+        for (let key in data.data){
+          tokenId = key;
+          token = data.data[key];
+        }
         //写入token
-        this.$store.commit('set_token', "1");
+        this.$store.commit('set_token', tokenId + "," + token);
         if (this.$store.state.token){
-          this.$router.push("/");//写入token，跳转回首页
+          this.$router.go(0);//写入token，跳转回首页
         }else {
           this.$router.push("/");//未登录暂时不处理
         }

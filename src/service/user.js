@@ -6,5 +6,9 @@ export const login = async (params) => {
 };
 
 export const register = async (params) => {
-  post(`/user/userRegister`, qs.stringify(params));
+  return post(`/user/userRegister`, qs.stringify(params));
 };
+
+export const logout = async (params) => {
+  return  get(`/user/logout`,qs.stringify(params))
+}

@@ -100,7 +100,6 @@
       <el-tab-pane label="房东" name="host">房东</el-tab-pane>
     </el-tabs>
     <RoomDisplay :RoomDetailData="data"></RoomDisplay>
-
   </div>
   </div>
 </template>

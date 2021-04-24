@@ -69,8 +69,10 @@
   </el-dialog>
 </template>
 <script>
-import { login, register } from "../../service/user";
-export default {
+  import {getPubKey, login, register} from "../../service/user";
+  import JSEncrypt from 'jsencrypt';
+
+  export default {
   name: "UserDialog",
   data() {
     return {
@@ -92,8 +94,18 @@ export default {
     },
   },
   methods: {
+    getRsaCode(str,pubKey){
+      let encryptStr = new JSEncrypt();
+      encryptStr.setPublicKey(pubKey); // 设置 加密公钥
+        // 进行加密
+      return encryptStr.encrypt(str.toString());
+    },
     async userLogin() {
-      const { userName, password } = this;
+      let pubKey = await getPubKey();
+      // const { userName, password } = this;
+      const userName = this.userName;
+      const password = this.getRsaCode(this.password,pubKey);
+      console.log(password);
       const data = await login({ userName, password });
       if (data) {
         console.log(data);

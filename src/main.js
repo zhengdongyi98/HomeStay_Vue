@@ -7,6 +7,8 @@ import ElementUI from "element-ui";
 import "./assets/css/theme/element-#128488/index.css";
 import qs from "qs"; //引入qs
 import Axios from "axios";
+
+
 Vue.prototype.$qs = qs;
 Vue.config.productionTip = false;
 Vue.use(ElementUI);

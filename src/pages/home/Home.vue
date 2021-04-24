@@ -18,7 +18,7 @@
           </el-scrollbar>
           <div class="main-card-container">
             <el-row :gutter="20">
-              <el-col :span="8" v-for="(item, i) in roomList" :key="i">
+              <el-col :span="8" v-for="(item, i) in roomList" :key="i" v-if="i<6">
                 <div @click="jumpToRoomDetail(item.rId)">
                   <Rooms :cardData="item"></Rooms>
                 </div>

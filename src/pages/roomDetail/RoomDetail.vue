@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs  @tab-click="handleClick">
       <el-tab-pane label="详情" name="detail">详情</el-tab-pane>
       <el-tab-pane label="评价" name="comments">评价</el-tab-pane>
       <el-tab-pane label="可订日期" name="orderAble">可订日期</el-tab-pane>
@@ -166,7 +166,7 @@ export default {
   transform: scale(1.05);
 }
 .el-tabs{
-  margin-left: 10%;
+  margin-left: 6%;
   margin-right: 10%;
 }
 </style>

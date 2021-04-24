@@ -13,13 +13,13 @@ module.exports = {
   devServer: {
     proxy: {
       "/room": {
-        // target: "http://47.98.226.145/homestay",
-        target: "http://localhost/homestay",
+        target: "http://47.98.226.145/homestay",
+        // target: "http://localhost/homestay",
         changeOrigin: true,
       },
       "/user": {
-        // target: "http://47.98.226.145/homestay",
-        target: "http://localhost/homestay",
+        target: "http://47.98.226.145/homestay",
+        // target: "http://localhost/homestay",
         changeOrigin: true,
       },
     },

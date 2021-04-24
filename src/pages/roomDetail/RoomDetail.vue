@@ -132,6 +132,9 @@ export default {
   created() {
     this.fetchData();
   },
+  computed: {
+
+  },
   watch: {},
   components: {NavMenu,RoomDisplay},
 };

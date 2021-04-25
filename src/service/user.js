@@ -13,6 +13,6 @@ export const logout = async (params) => {
   return  get(`/user/logout`,qs.stringify(params))
 }
 
-export const getPubKey = async (params) => {
-  return  get(`/user/getPubKey`,qs.stringify(params))
-}
+// export const getPubKey = async (params) => {
+//   return  get(`/user/getPubKey`,qs.stringify(params))
+// }

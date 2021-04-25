@@ -36,7 +36,7 @@ export function get(url, params) {
             showClose: true,
             message: res.data.msg,
           });
-        } else {
+        } else{
           resolve(res.data);
         }
       })

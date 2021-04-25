@@ -94,17 +94,10 @@
     },
   },
   methods: {
-    getRsaCode(str,pubKey){
-      let encryptStr = new JSEncrypt();
-      encryptStr.setPublicKey(pubKey); // 设置 加密公钥
-        // 进行加密
-      return encryptStr.encrypt(str.toString());
-    },
     async userLogin() {
-      let pubKey = await getPubKey();
       // const { userName, password } = this;
       const userName = this.userName;
-      const password = this.getRsaCode(this.password,pubKey);
+      const password = this.$getRsaCode(this.password);
       console.log(password);
       const data = await login({ userName, password });
       if (data) {

@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main>
-      <div class="category">
+      <div class="category" id="detail">
         <span
           >{{ RoomDetailData.baseRoom.category }}·{{
             RoomDetailData.baseRoom.type
@@ -131,9 +131,21 @@
         >
       </el-row>
       <el-divider></el-divider>
+      <div id="location"><h1>房源位置</h1></div>
       <el-divider></el-divider>
+      <div id="notice"><h1>须知</h1></div>
+      <el-divider></el-divider>
+      <div id="host"><h1>房东</h1></div>
     </el-main>
-    <el-aside> <BookingPanel :price="RoomDetailData.roomPrices"/> </el-aside>
+    <el-aside>
+      <a-affix :offset-top="top" style="margin-top: 15px">
+        <BookingPanel
+          :price="RoomDetailData.roomPrices"
+          :basePrice="RoomDetailData.baseRoom.basePrice"
+          :RoomDetailData="RoomDetailData"
+        />
+      </a-affix>
+    </el-aside>
   </el-container>
 </template>
 <script>
@@ -143,6 +155,7 @@ export default {
   data() {
     return {
       activeName: "RoomDisplay",
+      top: 50,
     };
   },
   components: {
@@ -198,6 +211,9 @@ export default {
       return amenitiesList;
     },
   },
+  created() {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  },
   props: {
     RoomDetailData: {
       type: Object,
@@ -211,6 +227,9 @@ export default {
 div {
   display: block;
 }
+.category {
+  margin-top: 15px;
+}
 .el-container {
   margin-left: 6%;
   margin-right: 10%;
@@ -220,7 +239,6 @@ div {
 .el-main {
   padding: 10px;
   width: 66.66% !important;
-  border: black solid 1px;
 }
 .el-aside {
   width: 33.33% !important;

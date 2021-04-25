@@ -91,14 +91,18 @@
           </div>
         </div>
       </div>
-      <el-tabs @tab-click="handleClick">
-        <el-tab-pane label="详情" name="detail">详情</el-tab-pane>
-        <el-tab-pane label="评价" name="comments">评价</el-tab-pane>
-        <el-tab-pane label="可订日期" name="orderAble">可订日期</el-tab-pane>
-        <el-tab-pane label="位置" name="location">位置</el-tab-pane>
-        <el-tab-pane label="须知" name="notice">须知</el-tab-pane>
-        <el-tab-pane label="房东" name="host">房东</el-tab-pane>
-      </el-tabs>
+      <a-affix :offset-top="0">
+        <el-tabs
+          @tab-click="handleClick"
+          style="background-color: white"
+          v-model="activeName"
+        >
+          <el-tab-pane label="详情" name="detail"></el-tab-pane>
+          <el-tab-pane label="位置" name="location"></el-tab-pane>
+          <el-tab-pane label="须知" name="notice"></el-tab-pane>
+          <el-tab-pane label="房东" name="host"></el-tab-pane>
+        </el-tabs>
+      </a-affix>
       <RoomDisplay :RoomDetailData="data"></RoomDisplay>
     </div>
   </div>
@@ -116,6 +120,8 @@ export default {
       data: data,
       windowWidth: document.documentElement.clientWidth,
       windowHeight: document.documentElement.clientHeight,
+      top: 10,
+      activeName: "detail",
     };
   },
   methods: {
@@ -125,7 +131,8 @@ export default {
       this.data = data.data;
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      const element = document.getElementById(this.activeName);
+      element.scrollIntoView({ behavior: "smooth" });
     },
   },
   created() {
@@ -166,5 +173,10 @@ export default {
 .el-tabs {
   margin-left: 6%;
   margin-right: 10%;
+}
+</style>
+<style>
+.el-tabs__header {
+  margin: 0 !important;
 }
 </style>

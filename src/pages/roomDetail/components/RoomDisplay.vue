@@ -131,7 +131,10 @@
         >
       </el-row>
       <el-divider></el-divider>
-      <div id="location"><h1>房源位置</h1></div>
+      <div id="location">
+        <h1>房源位置</h1>
+        <div id="container"></div>
+      </div>
       <el-divider></el-divider>
       <div id="notice"><h1>须知</h1></div>
       <el-divider></el-divider>
@@ -156,6 +159,7 @@ export default {
     return {
       activeName: "RoomDisplay",
       top: 50,
+      map: "",
     };
   },
   components: {
@@ -214,6 +218,18 @@ export default {
   created() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   },
+  mounted() {
+    const location = this.RoomDetailData.roomDetail.locationDetail.split(",");
+    this.map = new AMap.Map("container", {
+      zoom: 14, //级别
+      center: location, //中心点坐标
+      viewMode: "3D", //使用3D视图
+    });
+    var marker = new AMap.Marker({
+      position: new AMap.LngLat(location[0], location[1]), // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+    });
+    this.map.add(marker);
+  },
   props: {
     RoomDetailData: {
       type: Object,
@@ -224,6 +240,10 @@ export default {
 </script>
 
 <style scoped>
+#container {
+  width: 100%;
+  height: 300px;
+}
 div {
   display: block;
 }

@@ -5,8 +5,9 @@
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
+      style="display: flex"
     >
-      <div style="float: left">
+      <div style="width: 70%;text-align: left" >
         <el-menu-item @click="restartIndex">
           <!--        点击后进主界面-->
           <el-button type="text">民宿预订平台</el-button>
@@ -21,17 +22,17 @@
           ></el-input>
         </el-menu-item>
       </div>
-      <div style="float: right" id="rightDiv">
+      <div style="text-align: end;width: 30%" id="rightDiv">
         <el-menu-item index="1">出租房源</el-menu-item>
         <el-menu-item index="2">历史足迹</el-menu-item>
         <!-- <el-menu-item index="3" @click="handleUserDialogShow">注册</el-menu-item> -->
         <el-menu-item
           index="3"
           @click="handleUserDialogShow"
-          v-if="$store.state.token == null"
+          v-if="getLocalStorage('token') === null"
           >登录</el-menu-item
         >
-        <el-submenu index="4" v-if="$store.state.token != null">
+        <el-submenu index="4" mode="vertical" v-if="getLocalStorage('token') !== null">
           <template slot="title">我的</template>
           <el-menu-item index="4-1">个人资料</el-menu-item>
           <el-menu-item index="4-2" @click="Logout">注销</el-menu-item>
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+  import {fetchDataFromLocal, storeDataToLocal} from "../../utils/localStrogeHandler"
 import UserDialog from "./UserDialog";
 import { logout } from "../../service/user";
 export default {
@@ -60,6 +62,12 @@ export default {
     };
   },
   methods: {
+    getLocalStorage(key){
+      return fetchDataFromLocal(key)
+    },
+    setLocalStorage(key,value){
+      return  storeDataToLocal(key,value)
+    },
     handleSelect(key, keyPath) {
       //获取选择的位置
       console.log(key, keyPath);
@@ -82,6 +90,7 @@ export default {
     },
   },
   components: { UserDialog },
+
 };
 </script>
 
@@ -122,6 +131,11 @@ export default {
 .el-menu-item.is-active {
   background: rgba(0, 0, 0, 0);
   color: white;
+}
+.navRoot >>> .el-submenu>.el-submenu__title {
+  color: white;
+  background: rgba(0, 0, 0, 0) ;
+  font-size: 18px;
 }
 .el-input >>> .el-input__inner {
   /*vue组件编译后，会将 template 中的每个元素加入 [data-v-xxxx] 属性来确保 style scoped 仅本组件的元素而不会污染全局。

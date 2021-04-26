@@ -8,8 +8,8 @@ axios.defaults.headers.post["Content-Type"] =
 //请求在到达服务器之前，先会调用use中的这个回调函数来添加请求头信息
 axios.interceptors.request.use(
   (config) => {
-    if (store.state.token) {
-      config.headers.common["Authentication-Token"] = store.state.token;
+    if (localStorage.getItem("token")) {
+      config.headers.common["Authentication-Token"] = localStorage.getItem("token");
     }
     return config;
   },
@@ -31,14 +31,24 @@ export function get(url, params) {
         params: params,
       })
       .then((res) => {
-        if (res.data.state !== "1") {
+        if(res.data.state === '1'){
+          resolve(res.data);
+        }
+        if (res.data.state ==='3'||res.data.state ==='5'||res.data.state ==='6'||res.data.state ==='4'){
+          localStorage.removeItem("token");
+          resolve(res.data);
           Message.error({
             showClose: true,
             message: res.data.msg,
           });
-        } else{
-          resolve(res.data);
         }
+        // else {
+        //   Message.error({
+        //     showClose: true,
+        //     message: res.data.msg,
+        //   });
+        // }
+
       })
       .catch((err) => {
         Message.error({
@@ -58,14 +68,22 @@ export function post(url, params) {
     axios
       .post(`${url}`, params)
       .then((res) => {
-        if (res.data.state !== "1") {
+        if(res.data.state === '1'){
+          resolve(res.data);
+        }
+        if (res.data.state ==='3'||res.data.state ==='5'||res.data.state ==='6'||res.data.state ==='4'){
+          localStorage.removeItem("token");
           Message.error({
             showClose: true,
             message: res.data.msg,
           });
-        } else {
-          resolve(res.data);
         }
+        // else {
+        //   Message.error({
+        //     showClose: true,
+        //     message: res.data.msg,
+        //   });
+        // }
       })
       .catch((err) => {
         Message.error({

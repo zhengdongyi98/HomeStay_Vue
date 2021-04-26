@@ -131,6 +131,8 @@
         >
       </el-row>
       <el-divider></el-divider>
+      <div id="comments">评价</div>
+      <el-divider></el-divider>
       <div id="location">
         <h1>房源位置</h1>
         <div id="container"></div>

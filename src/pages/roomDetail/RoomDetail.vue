@@ -98,6 +98,7 @@
           v-model="activeName"
         >
           <el-tab-pane label="详情" name="detail"></el-tab-pane>
+          <el-tab-pane label="评价" name="comments"></el-tab-pane>
           <el-tab-pane label="位置" name="location"></el-tab-pane>
           <el-tab-pane label="须知" name="notice"></el-tab-pane>
           <el-tab-pane label="房东" name="host"></el-tab-pane>
@@ -127,8 +128,12 @@ export default {
   methods: {
     async fetchData() {
       const data = await getRoomById(this.$route.query.id);
+      console.log("2"+data.data+"1");
+      if (data.data === ""){
+        this.$router.push("/")
+      }
       console.log(data); //这里请求获得房间详细数据
-      this.data = data.data;
+        this.data = data.data;
     },
     handleClick(tab, event) {
       const element = document.getElementById(this.activeName);
@@ -158,6 +163,11 @@ export default {
 }
 .navRoot >>> .el-button {
   color: black;
+}
+.navRoot >>> .el-submenu>.el-submenu__title {
+  color: black;
+  background-color: white ;
+  font-size: 18px;
 }
 .image-container {
   background-color: black;

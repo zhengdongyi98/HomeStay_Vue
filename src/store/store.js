@@ -10,11 +10,13 @@ export default new Vuex.Store({
   mutations: {
     set_token(state, token) {
       state.token = token; //设置store参数
-      sessionStorage.token = token; //设置系统参数
+      // sessionStorage.token = token; //设置系统参数
+      localStorage.token = token;
     },
     del_token(state) {
       state.token = "";
-      sessionStorage.removeItem("token");
+      // sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
     },
   },
 });

@@ -40,62 +40,63 @@ export default {
   name: "Home",
   data() {
     return {
-      roomList: [
-        {
-          rId: 40,
-          uId: 3,
-          category: "酒店式公寓",
-          type: "整个房源",
-          capacity: 2,
-          roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-          basePrice: 216,
-          location: "江苏省苏州市相城区",
-          roomImages: [
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-          ],
-        },
-        {
-          rId: 40,
-          uId: 3,
-          category: "酒店式公寓",
-          type: "整个房源",
-          capacity: 2,
-          roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-          basePrice: 216,
-          location: "江苏省苏州市相城区",
-          roomImages: [
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-          ],
-        },
-        {
-          rId: 40,
-          uId: 3,
-          category: "酒店式公寓",
-          type: "整个房源",
-          capacity: 2,
-          roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-          basePrice: 216,
-          location: "江苏省苏州市相城区",
-          roomImages: [
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-            "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-          ],
-        },
-      ],
+      // roomList: [
+      //   {
+      //     rId: 40,
+      //     uId: 3,
+      //     category: "酒店式公寓",
+      //     type: "整个房源",
+      //     capacity: 2,
+      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
+      //     basePrice: 216,
+      //     location: "江苏省苏州市相城区",
+      //     roomImages: [
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
+      //     ],
+      //   },
+      //   {
+      //     rId: 40,
+      //     uId: 3,
+      //     category: "酒店式公寓",
+      //     type: "整个房源",
+      //     capacity: 2,
+      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
+      //     basePrice: 216,
+      //     location: "江苏省苏州市相城区",
+      //     roomImages: [
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
+      //     ],
+      //   },
+      //   {
+      //     rId: 40,
+      //     uId: 3,
+      //     category: "酒店式公寓",
+      //     type: "整个房源",
+      //     capacity: 2,
+      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
+      //     basePrice: 216,
+      //     location: "江苏省苏州市相城区",
+      //     roomImages: [
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
+      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
+      //     ],
+      //   },
+      // ],
+      roomList: [],
       selectCity: "", // 当前选中的城市
     };
   },
@@ -109,8 +110,13 @@ export default {
       this.selectCity = city;
     },
     jumpToRoomDetail(rId) {
-      console.log(rId);
-      this.$router.push(`/roomDetail?id=${rId}`);
+      if (localStorage.getItem("token")==="null"){
+        this.$message.error("请先登录")
+      } else {
+        console.log(rId);
+        this.$router.push(`/roomDetail?id=${rId}`);
+      }
+
     },
   },
   created() {

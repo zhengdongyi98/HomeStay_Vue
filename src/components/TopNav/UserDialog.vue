@@ -101,15 +101,10 @@
       console.log(password);
       const data = await login({ userName, password });
       if (data) {
-        console.log(data);
-        let token;
-        let tokenId;
-        for (let key in data.data){
-          tokenId = key;
-          token = data.data[key];
-        }
+        console.log(data.data);
+        let token = data.data;
         //写入token
-        this.$store.commit('set_token', tokenId + "," + token);
+        this.$store.commit('set_token', token);
         if (this.$store.state.token){
           this.$router.go(0);//写入token，跳转回首页
         }else {

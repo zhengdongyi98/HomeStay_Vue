@@ -11,7 +11,21 @@
       <span class="category">
         {{ cardData.category }}·{{ cardData.type }}·{{ cardData.capacity }}张床
       </span>
-      <div class="name" >{{ cardData.roomName }}</div>
+      <div
+        class="name"
+        style="
+          height: 36px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+        "
+      >
+        {{ cardData.roomName }}
+      </div>
       <div class="price">¥{{ cardData.basePrice }}</div>
     </div>
   </div>
@@ -58,7 +72,7 @@ export default {
   height: 44px;
   font-size: 16px;
   font-weight: bolder;
-  overflow:hidden;
+  overflow: hidden;
   color: rgb(72, 72, 72);
 }
 .price {

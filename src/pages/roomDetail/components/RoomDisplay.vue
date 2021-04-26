@@ -131,16 +131,117 @@
         >
       </el-row>
       <el-divider></el-divider>
-      <div id="comments">评价</div>
+      <div id="comments"><h1>评价</h1></div>
       <el-divider></el-divider>
       <div id="location">
         <h1>房源位置</h1>
+        <div style="font-weight: 800">
+          {{ RoomDetailData.baseRoom.location }}
+        </div>
+        <div style="font-weight: 800; margin-top: 20px">出行信息</div>
+        <div style="margin-top: 10px; margin-bottom: 10px">
+          {{ RoomDetailData.roomDetail.recommendation }}
+        </div>
         <div id="container"></div>
       </div>
       <el-divider></el-divider>
-      <div id="notice"><h1>须知</h1></div>
+      <div id="notice">
+        <h1>须知</h1>
+        <el-row style="margin-top: 10px"
+          ><el-col :span="8" style="font-weight: 800">房屋守则</el-col
+          ><el-col :span="16"
+            ><p>适合儿童(2-12岁)</p>
+            <p>不允许举办派对和活动</p>
+            <p>适合婴幼儿(2岁以下)</p>
+            <p>不允许携带宠物</p>
+            <p>禁止吸烟</p>
+            <p>
+              鉴于房源所在地相关法律法规及房东收到的监管要求，该房源暂时只接待持有中国大陆居民身份证或护照的房客。请使用中国大陆居民身份证或护照入住该房源，对您造成的不便我们深表歉意。
+            </p>
+          </el-col>
+        </el-row>
+        <el-row style="margin-top: 10px"
+          ><el-col :span="8" style="font-weight: 800">取消政策</el-col
+          ><el-col :span="16"
+            >4月26日下午3点前取消，扣除首晚房费后，退还剩余房费的50%和全部清洁费
+            查看完整详情</el-col
+          ></el-row
+        >
+        <el-row style="margin-top: 10px"
+          ><el-col :span="8" style="font-weight: 800">安全须知</el-col
+          ><el-col :span="16"
+            ><p>
+              在新冠肺炎疫情期间，我们要求所有房东和房客查看并遵守爱彼迎的社交距离准则和其他新冠肺炎疫情相关准则。
+            </p>
+            <p>未报告装有一氧化碳报警器。</p>
+            <p>未报告装有烟雾报警器。</p></el-col
+          ></el-row
+        >
+        <el-row style="margin-top: 10px"
+          ><el-col :span="8" style="font-weight: 800">安全预订</el-col
+          ><el-col :span="16"
+            >为了保护您的账号隐私及付款安全，请勿妄信第三方预订代理提供的折扣或礼金券，也不要在爱彼迎网站或App之外汇款或沟通。</el-col
+          ></el-row
+        >
+        <el-row style="margin-top: 10px"
+          ><el-col :span="8" style="font-weight: 800">发票须知</el-col
+          ><el-col :span="16"
+            >爱彼迎可为此房源的订单提供发票。开具发票，请在下单前选择「需要发票」并填写发票信息，退房后平台将自动为您开具电子普通发票，或纸质专用发票。</el-col
+          ></el-row
+        >
+      </div>
       <el-divider></el-divider>
-      <div id="host"><h1>房东</h1></div>
+      <div id="host">
+        <h1>房东</h1>
+        <el-row>
+          <el-col :span="8"
+            ><div style="font-size: 10px; font-weight: 800">
+              {{ RoomDetailData.user.userName }}
+            </div>
+            <div style="font-size: 10px">注册时间：2021年4月</div>
+            <div style="display: flex; margin-top: 10px">
+              <span style="font-size: 10px"><Icon :type="`nice`" /></span
+              ><span style="font-size: 10px; margin-left: 5px">超赞房东</span>
+              <img
+                class="_9ofhsl"
+                aria-hidden="true"
+                alt="已验证"
+                src="https://z1.muscache.cn/airbnb/static/packages/verified_badge.07c2f2a6.png"
+                data-original-uri="https://z1.muscache.cn/airbnb/static/packages/verified_badge.07c2f2a6.png"
+                style="
+                  object-fit: cover;
+                  vertical-align: bottom;
+                  width: 20px;
+                  height: 20px;
+                  margin-left: 5px;
+                "
+              />
+              <span style="font-size: 10px; margin-left: 5px">已验证</span>
+            </div></el-col
+          >
+          <el-col :span="16"
+            ><div class="demo-basic--circle">
+              <div class="block">
+                <el-avatar
+                  :size="60"
+                  style="margin-left: 10px"
+                  :src="icon()"
+                ></el-avatar>
+              </div></div
+          ></el-col>
+        </el-row>
+        <div style="margin-top: 20px; font-size: 12px">
+          <p style="font-weight: 800">自我介绍</p>
+          <p>哇~您看到我啦!</p>
+          <p>
+            一个很有待客之道的房东小姐姐,喜欢交朋友喜欢旅游,看书看电影,拍摄游泳~
+          </p>
+          <p style="font-weight: 800">与房客的互动</p>
+          <p>
+            我不会出现在房源里，但我非常愿意与房客沟通，工作时间遇到什么解决不了问题，还有线下管家可以去帮您
+          </p>
+        </div>
+      </div>
     </el-main>
     <el-aside>
       <a-affix :offset-top="top" style="margin-top: 15px">

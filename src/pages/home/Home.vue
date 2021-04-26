@@ -4,7 +4,8 @@
       <el-header style="height: 530px">
         <NavMenu></NavMenu>
         <div style="display: flex; justify-content: center">
-          <div class="search-area"></div>
+          <!-- <div class="search-area">NavSearch</div> -->
+          <div style="position: relative; top: 350px"><NavSearch /></div>
         </div>
       </el-header>
       <el-main style="display: flex; justify-content: center">
@@ -18,7 +19,11 @@
           </el-scrollbar>
           <div class="main-card-container">
             <el-row :gutter="20">
-              <el-col :span="8" v-for="(item, i) in roomList" :key="i" v-if="i<6">
+              <el-col
+                :span="8"
+                v-for="(item, i) in roomList.slice(0, 6)"
+                :key="i"
+              >
                 <div @click="jumpToRoomDetail(item.rId)">
                   <Rooms :cardData="item"></Rooms>
                 </div>
@@ -35,67 +40,12 @@
 import NavMenu from "../../components/TopNav/NavMenu";
 import Rooms from "./components/Rooms";
 import CitySelect from "./components/CitySelect";
+import NavSearch from "../../components/TopNav/NavSearch";
 import { getAllRooms } from "../../service/home";
 export default {
   name: "Home",
   data() {
     return {
-      // roomList: [
-      //   {
-      //     rId: 40,
-      //     uId: 3,
-      //     category: "酒店式公寓",
-      //     type: "整个房源",
-      //     capacity: 2,
-      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-      //     basePrice: 216,
-      //     location: "江苏省苏州市相城区",
-      //     roomImages: [
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-      //     ],
-      //   },
-      //   {
-      //     rId: 40,
-      //     uId: 3,
-      //     category: "酒店式公寓",
-      //     type: "整个房源",
-      //     capacity: 2,
-      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-      //     basePrice: 216,
-      //     location: "江苏省苏州市相城区",
-      //     roomImages: [
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-      //     ],
-      //   },
-      //   {
-      //     rId: 40,
-      //     uId: 3,
-      //     category: "酒店式公寓",
-      //     type: "整个房源",
-      //     capacity: 2,
-      //     roomName: "小恬家近火车站、城市生活广场，蓝色小兔120寸大投影屋",
-      //     basePrice: 216,
-      //     location: "江苏省苏州市相城区",
-      //     roomImages: [
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614022342.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023665.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614023755.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614027893.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614028263.jpg",
-      //       "http://home-stay.oss-cn-hangzhou.aliyuncs.com/roomImages/1593614030331.jpg",
-      //     ],
-      //   },
-      // ],
       roomList: [],
       selectCity: "", // 当前选中的城市
     };
@@ -110,13 +60,12 @@ export default {
       this.selectCity = city;
     },
     jumpToRoomDetail(rId) {
-      if (localStorage.getItem("token")==="null"){
-        this.$message.error("请先登录")
+      if (localStorage.getItem("token") === "null") {
+        this.$message.error("请先登录");
       } else {
         console.log(rId);
         this.$router.push(`/roomDetail?id=${rId}`);
       }
-
     },
   },
   created() {
@@ -131,6 +80,7 @@ export default {
     NavMenu,
     Rooms,
     CitySelect,
+    NavSearch,
   },
 };
 </script>

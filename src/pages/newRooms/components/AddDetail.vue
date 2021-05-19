@@ -43,6 +43,7 @@
             <el-input
                     style="font-size: 16px;"
                     type="textarea"
+                    @blur="getDescription"
                     placeholder="描述一下房源内部的空间和设施、周边的环境和交通路线等等……"
                     v-model="description"
                     maxlength="500"
@@ -69,6 +70,7 @@
               <el-input
                       style="font-size: 16px;"
                       type="textarea"
+                      @blur="getRecommendation"
                       placeholder="描述一下周边有什么特色地点、人文景观等等......"
                       v-model="recommendation"
                       maxlength="500"
@@ -97,7 +99,7 @@
           <span style="font-size: 16px !important;font-weight: 400 !important;">请确保您准备了足够的床位，让所有房客都能舒适入住。</span></div>
         <div style="margin-top: 30px;">
           <span style="font-size: 16px !important;font-weight: 600 !important;margin-right: 50px">最多容纳房客人数</span>
-          <el-input-number v-model="capacityNum" @change="handleChange" :min="1" label="capacityNum"></el-input-number>
+          <el-input-number v-model="capacityNum" @change="getCapacity" :min="1" label="capacityNum"></el-input-number>
         </div>
         <div class="bedRoomAndNumber">
           <div>
@@ -112,13 +114,7 @@
               </el-option>
             </el-select>
           </div>
-          <div style="margin-top: 30px;">
-            <span style="font-size: 19px;">有几张床？</span>
-            <div style="margin-top: 10px;">
-              <span style="font-size: 16px;font-weight: bolder;margin-right: 110px">床铺数量</span>
-              <el-input-number v-model="bedNum" @change="handleChange" :min="1" label="bedNum"></el-input-number>
-            </div>
-          </div>
+
 
           <div style="margin-top: 50px;">
             <span style="font-size: 24px;">床型信息</span>
@@ -135,19 +131,20 @@
                   <div ><span style="font-size: 19px;">{{bedObjList[index].totalBeds}}张床</span></div>
                 </div>
                 <div style="width: 100px;!important;height: 50px!important;float: right;margin-top:25px;">
-                  <el-button type="primary" @click="addBeds(index)">添加床铺</el-button>
+                  <el-button type="primary" @click="addBeds(index)" v-if="!bedObjList[index].buttonFlag">添加床铺</el-button>
+                  <el-button type="primary" @click="addBeds(index)" v-if="bedObjList[index].buttonFlag">完成</el-button>
                 </div>
               </div>
-              <div style="" v-if="bedObjList[index].button">
+              <div style="height: 200px" v-if="bedObjList[index].buttonFlag">
                 <div><span>1.4 米宽双人床</span><el-input-number v-model="bedObjList[index].type1" @change="culTotalBed(index)" :min="0" :max="5"></el-input-number></div>
                 <div><span>1.5 米宽双人床</span><el-input-number v-model="bedObjList[index].type2" @change="culTotalBed(index)" :min="0" :max="5" ></el-input-number></div>
                 <div><span>1 米宽单人床</span><el-input-number v-model="bedObjList[index].type3" @change="culTotalBed(index)" :min="0" :max="5"></el-input-number></div>
                 <div><span>沙发床</span><el-input-number v-model="bedObjList[index].type4" @change="culTotalBed(index)" :min="0" :max="5"></el-input-number></div>
               </div>
+              <el-divider></el-divider>
             </div>
 
           </div>
-          <el-divider></el-divider>
           <div style="margin-top:50px">
             <span style="font-size: 24px;font-weight: bolder">有几个卫生间？</span>
             <div>
@@ -155,7 +152,7 @@
             </div>
             <div style="margin-top: 30px;">
               <span style="font-size: 16px;font-weight: bolder;margin-right: 120px;">卫生间</span>
-              <el-input-number v-model="toiletNum" :precision="1" :step="0.5" :min="0" label="0"
+              <el-input-number v-model="toiletNum" :precision="1" :step="0.5" :min="0.5" label="0" @change="getToilet"
                                step-strictly></el-input-number>
             </div>
           </div>
@@ -171,7 +168,7 @@
             <span style="font-size: 16px !important;font-weight: 400 !important;">请选择至少 1 项便利设施，发布房源后可添加更多。</span>
           </div>
           <div>
-            <el-checkbox-group v-model="amenitiesList">
+            <el-checkbox-group v-model="amenitiesList" @change="getAmenitiesList">
               <div>
                 <el-checkbox label="生活必需品">生活必需品</el-checkbox>
                 <div style="margin-left: 25px">
@@ -210,7 +207,7 @@
             <span style="font-size: 16px !important;font-weight: 400 !important;">将公共区域涵盖其中，但不要添加您房源范围之外的空间。</span>
           </div>
           <div>
-            <el-checkbox-group v-model="spacesList">
+            <el-checkbox-group v-model="spacesList" @change="getSpacesList">
               <el-checkbox label="厨房">厨房</el-checkbox>
               <el-checkbox label="洗衣机">洗衣机</el-checkbox>
               <el-checkbox label="干衣机">干衣机</el-checkbox>
@@ -236,37 +233,37 @@
           <div style="margin-top: 20px;">
             <div style="margin-top: 30px;">
               <span style="font-size: 16px !important;font-weight: 400 !important;">适合儿童（2-12岁）</span>
-              <el-radio-group v-model="fitChild" style="float: right">
+              <el-radio-group @change="getHouseRules" v-model="fitChild" style="float: right">
                 <el-radio-button :label=true><i class="el-icon-check"></i></el-radio-button>
                 <el-radio-button :label=false><i class="el-icon-close"></i></el-radio-button>
               </el-radio-group>
             </div>
             <div style="margin-top: 30px;">
               <span style="font-size: 16px !important;font-weight: 400 !important;">适合婴幼儿（2岁以下）</span>
-              <el-radio-group v-model="kids" style="float: right">
-                <el-radio-button label=true><i class="el-icon-check"></i></el-radio-button>
-                <el-radio-button label=false><i class="el-icon-close"></i></el-radio-button>
+              <el-radio-group @change="getHouseRules" v-model="kids" style="float: right">
+                <el-radio-button :label=true><i class="el-icon-check"></i></el-radio-button>
+                <el-radio-button :label=false><i class="el-icon-close"></i></el-radio-button>
               </el-radio-group>
             </div>
             <div style="margin-top: 30px;">
               <span style="font-size: 16px !important;font-weight: 400 !important;">适合携带宠物入住</span>
-              <el-radio-group v-model="pets" style="float: right">
-                <el-radio-button label=true><i class="el-icon-check"></i></el-radio-button>
-                <el-radio-button label=false><i class="el-icon-close"></i></el-radio-button>
+              <el-radio-group @change="getHouseRules" v-model="pets" style="float: right">
+                <el-radio-button :label=true><i class="el-icon-check"></i></el-radio-button>
+                <el-radio-button :label=false><i class="el-icon-close"></i></el-radio-button>
               </el-radio-group>
             </div>
             <div style="margin-top: 30px;">
               <span style="font-size: 16px !important;font-weight: 400 !important;">允许吸烟</span>
-              <el-radio-group v-model="smoke" style="float: right">
-                <el-radio-button label=true><i class="el-icon-check"></i></el-radio-button>
-                <el-radio-button label=false><i class="el-icon-close"></i></el-radio-button>
+              <el-radio-group @change="getHouseRules" v-model="smoke" style="float: right">
+                <el-radio-button :label=true><i class="el-icon-check"></i></el-radio-button>
+                <el-radio-button :label=false><i class="el-icon-close"></i></el-radio-button>
               </el-radio-group>
             </div>
             <div style="margin-top: 30px;">
               <span style="font-size: 16px !important;font-weight: 400 !important;">允许举办活动</span>
-              <el-radio-group v-model="party" style="float: right">
-                <el-radio-button label=true><i class="el-icon-check"></i></el-radio-button>
-                <el-radio-button label=false><i class="el-icon-close"></i></el-radio-button>
+              <el-radio-group @change="getHouseRules" v-model="party" style="float: right">
+                <el-radio-button :label=true><i class="el-icon-check"></i></el-radio-button>
+                <el-radio-button :label=false><i class="el-icon-close"></i></el-radio-button>
               </el-radio-group>
             </div>
           </div>
@@ -274,13 +271,13 @@
           <div style="margin-top: 50px;">
             <span style="font-size: 16px !important;font-weight: 800 !important;">其他守则</span>
 
-            <div style="margin-top: 30px;" v-show="otherRules!==null" v-for="(item,index) in otherRules" :key="item">
+            <div style="margin-top: 30px;" @change="getHouseRules" v-show="otherRules!==null" v-for="(item,index) in otherRules" :key="item">
                 <span style="font-size: 16px !important;font-weight: 400 !important;">{{item}}</span>
               <el-button type="danger" icon="el-icon-delete" circle @click="deleteRule(index)" style="float: right;" size="small"></el-button>
             </div>
 
             <div style="margin-top: 30px;">
-              <el-input placeholder="某些时间需保持安静？室内不能穿鞋？" v-model="otherRule">
+              <el-input placeholder="某些时间需保持安静？室内不能穿鞋？" @change="getHouseRules" v-model="otherRule">
                 <template slot="append"><el-button @click="addRule">添加</el-button></template>
               </el-input>
             </div>
@@ -301,8 +298,7 @@
       return {
         capacityNum: 1,//可住人数
         bedRoomNumber: 1,
-        bedNum: 0,
-        bedObjList:[{'id':'room1', 'totalBeds': 0, 'type1':0, 'type2':0, 'type3':0, 'type4':0, 'button':false}],
+        bedObjList:[{'id':0, 'totalBeds': 0, 'type1':0, 'type2':0, 'type3':0, 'type4':0, 'buttonFlag':false}],
         toiletNum: 0,
         amenitiesList: [],
         spacesList: [],
@@ -326,33 +322,98 @@
     methods: {
       getRoomName(){
         console.log(this.roomName);
-        if (this.roomName.length<6){
-
+        if (this.roomName.length>=6){
+            this.$store.state.roomInfo['roomName']=this.roomName;
         }
       },
-      handleChange(value) {
-        console.log(value);
+      getDescription(){
+        console.log(this.description);
+        if (this.description.length>=30){
+          this.$store.state.roomInfo['description']=this.description;
+        }
+      },
+      getRecommendation(){
+        console.log(this.recommendation);
+        if (this.recommendation.length>=30){
+          this.$store.state.roomInfo['recommendation']=this.recommendation;
+        }
+      },
+      getCapacity(){
+        console.log(this.capacityNum);
+        if (this.capacityNum.length>=30){
+          this.$store.state.roomInfo['capacity']=this.capacityNum;
+        }
       },
       getBedRoomNumber(bedRoomNumber) {
         this.bedObjList=[];
         for (let i=0 ;i<bedRoomNumber; i++){
           this.bedObjList.push({
-            id:('room'+(i+1)),
+            id:i,
             totalBeds: 0,
             type1:0,
             type2:0,
             type3:0,
-            type4:0
+            type4:0,
+            buttonFlag:false
           })
         }
         console.log(bedRoomNumber);
+        this.$store.state.roomInfo['bedRoomNumber'] = this.bedRoomNumber;//卧室数
       },
-      addBeds(index){
-        if (this.bedObjList[index].button){
-          this.bedObjList[index].button = false;
+      addBeds(index){//在这里面更改roomInfo数据
+        this.$store.state.roomInfo['bedObjList']=this.bedObjList;
+        console.log(this.bedObjList);
+        console.log(this.bedObjList[index].buttonFlag);
+        if (this.bedObjList[index].buttonFlag){
+          this.bedObjList[index].buttonFlag = false;
         } else {
-          this.bedObjList[index].button = true;
+          this.bedObjList[index].buttonFlag = true;
         }
+      },
+      getToilet(){
+        console.log(this.toiletNum);
+          this.$store.state.roomInfo['toilet']=this.toiletNum;
+
+      },
+      getAmenitiesList(){
+        console.log(this.amenitiesList);
+        this.$store.state.roomInfo['amenities']=this.amenitiesList;
+      },
+      getSpacesList(){
+        console.log(this.spacesList);
+        this.$store.state.roomInfo['spaces']=this.spaces;
+      },
+      getHouseRules(){
+        console.log(this.fitChild);
+        console.log(this.kids);
+        console.log(this.pets);
+        console.log(this.smoke);
+        console.log(this.party);
+        let str = "";
+        if(this.fitChild){
+            str+='适合儿童（2-12岁）,'
+        }
+        if(this.kids){
+          str+='适合婴幼儿（2岁以下）,'
+        }
+        if(this.pets){
+          str+='适合携带宠物入住,'
+        }
+        if(this.smoke){
+          str+='允许吸烟,'
+        }
+        if(this.party){
+          str+='允许举办活动,'
+        }
+        if(this.otherRules!==null){
+          console.log(this.otherRules);
+          console.log(this.otherRules.length);
+          for (let i=0;i<this.otherRules.length;i++){
+            str+=this.otherRules[i]+","
+          }
+        }
+        console.log(str);
+
       },
       scrollFun(){
         let s1 = document.getElementById("roomNameDiv");
@@ -376,8 +437,8 @@
         }
       },
       culTotalBed(index){
-
           this.bedObjList[index].totalBeds=this.bedObjList[index].type1+this.bedObjList[index].type2+this.bedObjList[index].type3+this.bedObjList[index].type4;
+
       },
       addRule(){
         if (this.otherRule !== "" && this.otherRule!==null && this.otherRule.length!==0 && this.otherRule.trim().length!==0){
@@ -387,6 +448,7 @@
       },
       deleteRule(index){
         this.otherRules.splice(index,1)
+        this.getHouseRules();
       }
     },
     computed:{
@@ -394,6 +456,7 @@
     },
     created() {
       window.addEventListener("scroll",this.scrollFun);
+      this.getHouseRules();
     }
 
   }

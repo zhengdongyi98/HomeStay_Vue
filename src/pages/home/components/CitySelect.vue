@@ -30,7 +30,8 @@ export default {
         "上海",
         "大理",
       ],
-      currentSelectCity: "",
+      //默认选择重庆
+      currentSelectCity: "重庆",
     };
   },
   props: {
@@ -42,8 +43,8 @@ export default {
     setCurrentSelectCity(city) {
       if (this.currentSelectCity === city) {
         //  选中后再次点击可取消，home接收到空字符串
-        this.currentSelectCity = "";
-        this.setSelectCity("");
+        // this.currentSelectCity = "";
+        // this.setSelectCity("");
       } else {
         this.currentSelectCity = city;
         this.setSelectCity(city);

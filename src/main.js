@@ -27,6 +27,20 @@ Vue.use(ElementUI);
 Vue.use(Antd);
 Axios.defaults.headers.common["Authentication-Token"] = null; //为头部设置新参数
 
+router.beforeEach((to,from,next)=>{
+  console.log(to);
+  document.title = to.name
+  next()
+})
+
+//跳转后始终在顶部
+router.afterEach(()=>{
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
+  console.log("----");
+})
+
 new Vue({
   router,
   store,

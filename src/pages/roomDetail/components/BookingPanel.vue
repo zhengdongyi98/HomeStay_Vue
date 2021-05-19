@@ -18,10 +18,10 @@
                 <span
                   v-if="getCurrentStyle(current)"
                   style="
-                    font-size: 5px;
+                    font-size: 14px;
                     top: -5px;
                     position: relative;
-                    font-weight: 300;
+                    font-weight: 200;
                   "
                 >
                   ¥{{ getCurrentStyle(current) }}

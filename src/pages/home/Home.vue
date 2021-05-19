@@ -30,6 +30,10 @@
               </el-col>
             </el-row>
           </div>
+          <div class="moreRoom">
+            <router-link :to="'/citySearch/'+ selectCity" tag="a"
+                         style="color: rgb(0, 132, 137) !important;">查看更多{{selectCity}}房源 ></router-link>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -47,7 +51,7 @@ export default {
   data() {
     return {
       roomList: [],
-      selectCity: "", // 当前选中的城市
+      selectCity: "重庆", // 当前选中的城市
     };
   },
   methods: {
@@ -97,4 +101,9 @@ export default {
   width: 80%;
   height: 72px;
 }
+  .moreRoom{
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 22px;
+  }
 </style>

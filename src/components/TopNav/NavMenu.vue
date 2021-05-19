@@ -23,7 +23,9 @@
         </el-menu-item>
       </div>
       <div style="text-align: end;width: 30%" id="rightDiv">
-        <el-menu-item index="1">出租房源</el-menu-item>
+        <el-menu-item index="1"
+          @click="handleAddNewRoom"
+        >出租房源</el-menu-item>
         <el-menu-item index="2">历史足迹</el-menu-item>
         <!-- <el-menu-item index="3" @click="handleUserDialogShow">注册</el-menu-item> -->
         <el-menu-item
@@ -88,6 +90,15 @@ export default {
         this.$router.go(0);
       }
     },
+    //添加新房源
+    handleAddNewRoom(){
+      //没登陆不能新增房源
+      if (this.getLocalStorage('token') === null) {
+        this.handleUserDialogShow();
+      }else {
+       this.$router.push("/newRoom")
+      }
+    }
   },
   components: { UserDialog },
 
@@ -95,6 +106,10 @@ export default {
 </script>
 
 <style scoped>
+  .navRoot{
+    display: block!important;
+    width: 100%;
+  }
 .el-menu.el-menu--horizontal {
   /*底部的线*/
   border-bottom: hidden;

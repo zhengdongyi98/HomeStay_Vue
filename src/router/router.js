@@ -2,6 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "../pages/home/Home.vue";
 import RoomDetail from "../pages/roomDetail/RoomDetail.vue";
+import CitySearch from "../pages/citySearch/CitySearch.vue"
+import NewRoom from "../pages/newRooms/NewRoom.vue"
+import AddBaseRoom from "../pages/newRooms/components/AddBaseRoom"
+import AddDetail from "../pages/newRooms/components/AddDetail"
+import AddImages from "../pages/newRooms/components/AddImages"
+import AddPrice from "../pages/newRooms/components/AddPrice"
 import store from "../store/store";
 
 Vue.use(Router);
@@ -17,19 +23,55 @@ if (window.sessionStorage.getItem("token")) {
   store.commit("set_token", sessionStorage.getItem("token"));
 }
 
+
+
 export default new Router({
   // mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "民宿预订平台",
       component: Home,
     },
     {
       path: "/roomDetail",
-      name: "roomDetail",
+      name: "房源详情",
       component: RoomDetail,
     },
+    {
+      path: "/citySearch/:cityName",
+      name: "citySearch",
+      component: CitySearch,
+    },
+    {
+      path: "/newRoom",
+      name: "成为房东",
+      component: NewRoom,
+      children: [
+        {
+          path: "/addBaseRoom",
+          name: "基本信息",
+          component: AddBaseRoom,
+        },
+        {
+          path: "/addDetail",
+          name: "详细信息",
+          component: AddDetail,
+        },
+        {
+          path: "/addImages",
+          name: "图片信息",
+          component: AddImages,
+        },
+        {
+          path: "/addPrice",
+          name: "价格信息",
+          component: AddPrice,
+        }
+      ]
+    },
+
   ],
 });
+

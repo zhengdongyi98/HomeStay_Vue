@@ -14,7 +14,7 @@
           >
             <el-image
               class="room-image"
-              :src="data.baseRoom.roomImages[0]"
+              :src="this.data.baseRoom.roomImages[0]"
               fit="cover"
               style="width: 100%; height: 100%"
             />
@@ -118,7 +118,7 @@ export default {
   name: "RoomDetail",
   data() {
     return {
-      data: data,
+      data: {},
       windowWidth: document.documentElement.clientWidth,
       windowHeight: document.documentElement.clientHeight,
       top: 10,
@@ -129,10 +129,10 @@ export default {
     async fetchData() {
       const data = await getRoomById(this.$route.query.id);
       console.log("2"+data.data+"1");
-      if (data.data === ""){
+      if (data.data === ""||data.data === null){
         this.$router.push("/")
       }
-      console.log(data); //这里请求获得房间详细数据
+      console.log(data.data); //这里请求获得房间详细数据
         this.data = data.data;
     },
     handleClick(tab, event) {

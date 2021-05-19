@@ -306,6 +306,9 @@ export default {
       if (type === "整个房源") {
         return "独享所有空间，无需与他人共用";
       }
+      if (type === "独立房间") {
+        return "有自己的单独卧室，与他人共享其它空间";
+      }
     },
     amenities() {
       let amenitiesList = [];

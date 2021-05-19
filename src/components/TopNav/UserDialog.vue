@@ -25,7 +25,7 @@
           @click="userLogin"
           type="primary"
           style="width: 100%; margin-top: 20px"
-          >登陆</el-button
+          >登录</el-button
         >
         <el-divider>或</el-divider>
         <el-button @click="containerState = `register`" style="width: 100%"
@@ -43,17 +43,17 @@
           placeholder="密码"
           show-password
           style="margin-top: 20px"
-        ></el-input>
+        ></el-input>{{checkPwd()}}
         <el-input
           v-model="email"
           placeholder="邮箱"
           style="margin-top: 20px"
-        ></el-input>
+        ></el-input>{{checkEmail()}}
         <el-input
           v-model="phone"
           placeholder="手机"
           style="margin-top: 20px"
-        ></el-input>
+        ></el-input>{{checkPhone()}}
         <el-radio-group style="margin-top: 20px" v-model="gender">
           <el-radio v-model="gender" :label=1>男</el-radio>
           <el-radio v-model="gender" :label=0>女</el-radio>
@@ -61,6 +61,7 @@
         <el-button
           @click="userRegister"
           type="primary"
+          :disabled="checkFormat1()"
           style="width: 100%; margin-top: 20px"
           >注册</el-button
         >
@@ -71,7 +72,7 @@
 <script>
   import {getPubKey, login, register} from "../../service/user";
   import JSEncrypt from 'jsencrypt';
-
+  import { Message } from 'element-ui';
   export default {
   name: "UserDialog",
   data() {
@@ -82,6 +83,7 @@
       email: "",
       phone: "",
       gender: 1,
+      checkFormat: true
     };
   },
   props: {
@@ -113,13 +115,48 @@
         this.handleUserDialogShow();
       }
     },
+    // userName: "",
+    // password: "",
+    // email: "",
+    // phone: "",
+
+    checkEmail(){
+      var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if(!myreg.test(this.email)&&this.email.length!==0){
+        return "邮箱格式有误"
+      }
+      if (this.phone.length!==0&&this.password.length!==0&&this.email.length!==0){
+        this.checkFormat = false;
+      }
+    },
+    checkPhone(){
+      var mobile=/^((13[0-9]{1})|159|153)+\d{8}$/;
+      if (!mobile.test(this.phone)&&this.phone.length!==0){
+        return "电话号码格式有误"
+      }
+      if (this.phone.length!==0&&this.password.length!==0&&this.email.length!==0){
+        this.checkFormat = false;
+      }
+    },
+    checkPwd(){
+      if (this.password.length<6&&this.password.length!==0){
+        return "密码不能小于6"
+      }
+    },
+    checkFormat1(){
+      var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      var mobile=/^((13[0-9]{1})|159|153)+\d{8}$/;
+      if (this.password.length>=6&&this.phone.length!==0&&this.password.length!==0&&this.email.length!==0&&mobile.test(this.phone)&&myreg.test(this.email)){
+        this.checkFormat = false;
+      }else
+        return true;
+    },
     async userRegister() {
       const { userName, password, email, phone, gender } = this;
       const data = await register({ userName, password, email, phone, gender });
-      this.$message({
+      Message.success({
         showClose: true,
         message: "注册成功，请前往电子邮箱进行激活",
-        type: "success",
       });
       this.handleUserDialogShow();
     },
@@ -129,6 +166,7 @@
       this.email= ""
       this.phone= ""
       this.gender= 1
+      this.checkFormat = true
     }
   },
   watch: {

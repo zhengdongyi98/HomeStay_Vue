@@ -71,7 +71,7 @@ export function post(url, params) {
         if(res.data.state === '1'){
           resolve(res.data);
         }
-        if (res.data.state ==='3'||res.data.state ==='5'||res.data.state ==='6'||res.data.state ==='4'){
+        if (res.data.state ==="2" ||  res.data.state ==='3'||res.data.state ==='5'||res.data.state ==='6'||res.data.state ==='4'){
           localStorage.removeItem("token");
           Message.error({
             showClose: true,

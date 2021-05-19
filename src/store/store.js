@@ -6,8 +6,32 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: null, //对token进行监管
+    roomInfo: {
+      'category': "",
+      'type': "",
+      'location': "",
+      'locationDetail': "",
+      'capacityNum': 0,
+      'bedRoomNumber': 0,
+      'bedNum': 0,
+      'toiletNum': 0,
+      'amenitiesList': "",
+      'spacesList': "",
+      'roomName': "",
+      'description': "",
+      'recommendation': "",
+      'rules': "",
+      'timeList':"",
+      'blockTime':"",
+      "basePrice":"",
+    },
+    fileList: {},
   },
   mutations: {
+    set_file(state,fileList){
+      state.fileList = fileList;
+    },
+
     set_token(state, token) {
       state.token = token; //设置store参数
       // sessionStorage.token = token; //设置系统参数

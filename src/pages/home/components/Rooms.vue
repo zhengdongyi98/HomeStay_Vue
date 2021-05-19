@@ -64,11 +64,13 @@ export default {
   font-weight: 500;
 }
 .category {
+
   font-size: 12px;
   font-weight: bolder;
   color: rgb(57, 87, 106);
 }
 .name {
+  margin-top: 5px;
   height: 44px;
   font-size: 16px;
   font-weight: bolder;
@@ -76,7 +78,7 @@ export default {
   color: rgb(72, 72, 72);
 }
 .price {
-  margin-top: 5px;
+  margin-top: 10px;
   cursor: default;
   font-size: 18px;
   font-weight: bolder;

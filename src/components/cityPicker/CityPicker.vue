@@ -50,7 +50,11 @@
         this.city = this.selectedOptions[3];
         this.erae = this.selectedOptions[4];
         this.minerae = this.selectedOptions[5];
-        this.fullAddress = this.city+this.erae+this.minerae;
+        if (this.city===''&&this.erae===''&&this.minerae===''){
+          this.fullAddress = '中国'
+        } else {
+          this.fullAddress = this.city+this.erae+this.minerae;
+        }
         this.$store.state.roomInfo['location'] = this.fullAddress;//存入省市区信息
       },
 

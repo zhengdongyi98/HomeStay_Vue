@@ -5,7 +5,7 @@
         <div class="nav-search">
           <el-input
             placeholder="输入目的地、城市或景点"
-            v-model="input3"
+            v-model="location"
             class="input-with-select"
             style="height: 60px"
           >
@@ -16,18 +16,20 @@
               style="height: 60px"
             >
               <el-option label="房源" value="1"></el-option>
-              <el-option label="体验" value="2"></el-option>
             </el-select>
             <el-date-picker
-              style="height: 60px"
+              style="height: 60px;"
               slot="suffix"
-              v-model="value1"
+              :picker-options="pickerOptions1"
+              @change="getTimeList"
+              value-format="yyyy-MM-dd"
+              v-model="timeList"
               type="daterange"
               start-placeholder="入住日期"
               end-placeholder="退房日期"
             >
             </el-date-picker>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchRoom"></el-button>
           </el-input>
         </div>
       </el-form-item>
@@ -36,25 +38,56 @@
 </template>
 
 <script>
+
+import moment from "moment";
+
 export default {
   name: "NavSearch",
   components: {},
   data() {
     return {
-      input1: "",
-      input2: "",
-      input3: "",
+      timeList: [],
+      location: "",
       select: "",
-      value1: "",
+      pickerOptions1: this.pickerOptions11(),
     };
   },
+  methods:{
+    pickerOptions11() {
+      return {
+        disabledDate(time) {
+          return moment(time.getTime()).format("YYYY-MM-DD") < moment().format("YYYY-MM-DD");
+        }
+      }
+    },
+    getTimeList(){
+      console.log(this.timeList);
+      if (this.timeList!==null) {
+        if(this.timeList[0]===this.timeList[1]){
+          this.$message.error("不能一样")
+          this.timeList = []
+        }else {
+        }
+      }
+    },
+    searchRoom(){
+      this.$router.push({
+        path: '/roomSearch',
+        query:{
+          location:this.location,
+          timeList:this.timeList
+        }
+      })
+    }
+  }
 };
 </script>
 
 <style>
 .el-select .el-input {
-  width: 130px;
+  width: 130px
 }
+
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
@@ -63,6 +96,7 @@ export default {
   font-size: 15px!important;
   font-weight: bold!important;
   color: black!important;
+  padding-right: 0px!important;
 }
 .nav-search .el-date-editor .el-range-separator {
   line-height: 50px;

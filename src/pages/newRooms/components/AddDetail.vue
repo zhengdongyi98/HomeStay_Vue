@@ -271,13 +271,13 @@
           <div style="margin-top: 50px;">
             <span style="font-size: 16px !important;font-weight: 800 !important;">其他守则</span>
 
-            <div style="margin-top: 30px;" @change="getHouseRules" v-show="otherRules!==null" v-for="(item,index) in otherRules" :key="item">
+            <div style="margin-top: 30px;" v-model="otherRules" v-show="otherRules!==null" v-for="(item,index) in otherRules" :key="item">
                 <span style="font-size: 16px !important;font-weight: 400 !important;">{{item}}</span>
               <el-button type="danger" icon="el-icon-delete" circle @click="deleteRule(index)" style="float: right;" size="small"></el-button>
             </div>
 
             <div style="margin-top: 30px;">
-              <el-input placeholder="某些时间需保持安静？室内不能穿鞋？" @change="getHouseRules" v-model="otherRule">
+              <el-input placeholder="某些时间需保持安静？室内不能穿鞋？" v-model="otherRule">
                 <template slot="append"><el-button @click="addRule">添加</el-button></template>
               </el-input>
             </div>
@@ -340,9 +340,7 @@
       },
       getCapacity(){
         console.log(this.capacityNum);
-        if (this.capacityNum.length>=30){
-          this.$store.state.roomInfo['capacity']=this.capacityNum;
-        }
+        this.$store.state.roomInfo['capacity']=this.capacityNum;
       },
       getBedRoomNumber(bedRoomNumber) {
         this.bedObjList=[];
@@ -381,39 +379,28 @@
       },
       getSpacesList(){
         console.log(this.spacesList);
-        this.$store.state.roomInfo['spaces']=this.spaces;
+        this.$store.state.roomInfo['spaces']=this.spacesList;
       },
       getHouseRules(){
-        console.log(this.fitChild);
-        console.log(this.kids);
-        console.log(this.pets);
-        console.log(this.smoke);
-        console.log(this.party);
         let str = "";
         if(this.fitChild){
-            str+='适合儿童（2-12岁）,'
+            str+='适合儿童（2-12岁）'
         }
         if(this.kids){
-          str+='适合婴幼儿（2岁以下）,'
+          str+='适合婴幼儿（2岁以下）'
         }
         if(this.pets){
-          str+='适合携带宠物入住,'
+          str+='适合携带宠物入住 '
         }
         if(this.smoke){
-          str+='允许吸烟,'
+          str+='允许吸烟 '
         }
         if(this.party){
-          str+='允许举办活动,'
+          str+='允许举办活动 '
         }
-        if(this.otherRules!==null){
-          console.log(this.otherRules);
-          console.log(this.otherRules.length);
-          for (let i=0;i<this.otherRules.length;i++){
-            str+=this.otherRules[i]+","
-          }
-        }
+        str = str.trimEnd();
         console.log(str);
-
+        this.$store.state.roomInfo['houseRules'] = str;
       },
       scrollFun(){
         let s1 = document.getElementById("roomNameDiv");
@@ -438,11 +425,11 @@
       },
       culTotalBed(index){
           this.bedObjList[index].totalBeds=this.bedObjList[index].type1+this.bedObjList[index].type2+this.bedObjList[index].type3+this.bedObjList[index].type4;
-
       },
       addRule(){
         if (this.otherRule !== "" && this.otherRule!==null && this.otherRule.length!==0 && this.otherRule.trim().length!==0){
-          this.otherRules.push(this.otherRule)
+          this.otherRules.push(this.otherRule);
+          this.getHouseRules();
         }
         this.otherRule = ""
       },

@@ -103,12 +103,19 @@
       console.log(password);
       const data = await login({ userName, password });
       if (data) {
-        console.log(data.data);
-        let token = data.data;
+        let token = data.data['token'];
+        let user = data.data['user'];
+        console.log(token);
+        console.log(user);
         //写入token
         this.$store.commit('set_token', token);
-        if (this.$store.state.token){
+        this.$store.commit('set_user', user);
+
+        console.log(this.$store.state.token);
+        console.log(this.$store.state.user);
+          if (this.$store.state.token){
           this.$router.go(0);//写入token，跳转回首页
+
         }else {
           this.$router.push("/");//未登录暂时不处理
         }

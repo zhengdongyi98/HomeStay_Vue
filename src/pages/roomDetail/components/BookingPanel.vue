@@ -10,6 +10,7 @@
           @change="onChange"
           :disabled-date="disabledDate"
           :locale="locale"
+          @calendarChange="calendarChange"
         >
           <template slot="dateRender" slot-scope="current">
             <div class="ant-calendar-date">
@@ -32,20 +33,20 @@
         </a-range-picker>
       </div>
     </div>
-    <div style="margin-top: 20px">
-      人数
-      <div>
-        <el-select v-model="people" placeholder="请选择" style="width: 100%">
-          <el-option
-            v-for="item in RoomDetailData.baseRoom.capacity"
-            :key="item"
-            :label="`${item}人`"
-            :value="item"
-          >
-          </el-option>
-        </el-select>
-      </div>
-    </div>
+<!--    <div style="margin-top: 20px">-->
+<!--      人数-->
+<!--      <div>-->
+<!--        <el-select v-model="people" placeholder="请选择" style="width: 100%">-->
+<!--          <el-option-->
+<!--            v-for="item in RoomDetailData.baseRoom.capacity"-->
+<!--            :key="item"-->
+<!--            :label="`${item}人`"-->
+<!--            :value="item"-->
+<!--          >-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </div>-->
+<!--    </div>-->
     <div v-if="totalPrice !== -1" style="margin-top: 20px">
       <el-row>
         <el-col :span="12">{{ days }}晚</el-col>
@@ -59,7 +60,7 @@
         <el-col :span="12" style="text-align: end">¥{{ totalPrice }}</el-col>
       </el-row>
     </div>
-    <el-button type="danger" style="width: 100%; margin-top: 20px"
+    <el-button type="danger" @click="submitOrder" :disabled="orderVo.orderedTime.length===0" style="width: 100%; margin-top: 20px"
       >预定</el-button
     >
     <div v-if="totalPrice !== -1" style="margin-top: 20px">
@@ -74,6 +75,8 @@
 <script>
 import locale from "ant-design-vue/es/date-picker/locale/zh_CN";
 import moment from "moment";
+import {orderRoom} from "../../../service/order";
+
 export default {
   name: "BookingPanel",
   props: {
@@ -86,6 +89,9 @@ export default {
     RoomDetailData: {
       type: Object,
     },
+    baseRoomData:{
+      type:Object,
+    }
   },
   // components: {
   //   RangePicker,
@@ -97,16 +103,31 @@ export default {
       people: "",
       totalPrice: -1,
       days: 0,
+      orderVo:{
+        uId:"",
+        hId:"",
+        rId:"",
+        orderedTime:[],
+        totalPrice:"",
+      }
     };
   },
   methods: {
+
     onChange(date, dateString) {
-      if (dateString[0] && dateString[1]) {
+      // console.log(date);
+      console.log(dateString);
+      if (dateString[0] && dateString[1]&&dateString[0]!==""&&dateString[1]!=="") {
+        // console.log(dateString[0]);
+        // console.log(dateString[1]);
         this.selectDate = dateString;
         const { price } = this;
+        const timeListAbled = price.filter((item)=> item.timeAbled<=dateString[1]&&item.timeAbled>=dateString[0]&&!item.blockState)
+                                    .map((item)=> item.timeAbled);
+        console.log(timeListAbled);
         const [startTime, endTime] = dateString;
-        const sIndex = price.findIndex((item) => item.time === startTime);
-        const eIndex = price.findIndex((item) => item.time === endTime);
+        const sIndex = price.findIndex((item) => item.timeAbled === startTime);
+        const eIndex = price.findIndex((item) => item.timeAbled === endTime);
         let priceList = [];
         for (let i = sIndex; i <= eIndex; i++) {
           priceList.push(price[i]);
@@ -118,15 +139,21 @@ export default {
         });
         this.days = priceList.length;
         this.totalPrice = sum;
+        this.orderVo.totalPrice = this.totalPrice;
+        this.orderVo.orderedTime = timeListAbled;
       } else {
         this.days = 0;
         this.totalPrice = -1;
+        this.orderVo.orderedTime=[]
       }
+
     },
     getCurrentStyle(current, today) {
       const index = this.price.findIndex(
         (item) =>
-          item.time === moment(current).format("YYYY-MM-DD") && !item.blockState
+          item.timeAbled === moment(current).format("YYYY-MM-DD")
+            && !item.blockState &&
+            (moment(current).format("YYYY-MM-DD")>=moment().format("YYYY-MM-DD"))
       );
       if (index > -1) {
         return this.price[index].price;
@@ -137,14 +164,38 @@ export default {
     disabledDate(time) {
       const disableTimeList = this.price
         .filter((item) => !item.blockState)
-        .map((item) => item.time);
-      return !(disableTimeList.indexOf(moment(time).format("YYYY-MM-DD")) > -1);
+        .map((item) => item.timeAbled);
+      return !(disableTimeList.indexOf(moment(time).format("YYYY-MM-DD")) > -1)||(moment(time).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD"));
     },
+    calendarChange(dates,dateStrings){
+
+    },
+    async submitOrder(){
+      console.log(this.orderVo);
+      //时间没选，无法预订
+      const data = await orderRoom(this.orderVo);
+      if (data.data!==null){
+        document.querySelector('body').innerHTML = data.data
+        document.forms[0].submit();
+      }
+
+    },
+    initOrder(){
+      this.orderVo.hId = this.baseRoomData['uId'];
+      this.orderVo.uId = this.$store.state.user['uId'];
+      this.orderVo.rId = this.baseRoomData['rId']
+    }
   },
+  created() {
+    this.initOrder()
+  }
 };
 </script>
 
 <style scoped>
+  .changeColor{
+    color:red;
+  }
 .main-container {
   padding: 24px;
   border: 1px solid #e4e4e4 !important;

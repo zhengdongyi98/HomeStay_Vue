@@ -17,7 +17,8 @@
           <el-input
             type="text"
             placeholder="按城市、地址、地标搜索"
-            v-model="input"
+            v-model="location"
+            @keyup.enter.native="searchLocation"
             prefix-icon="el-icon-search"
           ></el-input>
         </el-menu-item>
@@ -26,7 +27,7 @@
         <el-menu-item index="1"
           @click="handleAddNewRoom"
         >出租房源</el-menu-item>
-        <el-menu-item index="2">历史足迹</el-menu-item>
+        <el-menu-item index="2">管理面板</el-menu-item>
         <!-- <el-menu-item index="3" @click="handleUserDialogShow">注册</el-menu-item> -->
         <el-menu-item
           index="3"
@@ -34,10 +35,11 @@
           v-if="getLocalStorage('token') === null"
           >登录</el-menu-item
         >
-        <el-submenu index="4" mode="vertical" v-if="getLocalStorage('token') !== null">
+        <el-submenu style="" index="4" mode="vertical" v-if="getLocalStorage('token') !== null">
           <template slot="title">我的</template>
-          <el-menu-item index="4-1">个人资料</el-menu-item>
-          <el-menu-item index="4-2" @click="Logout">注销</el-menu-item>
+          <el-menu-item index="4-1" @click="personInfo">个人资料</el-menu-item>
+          <el-menu-item index="4-2" @click="getAccount">账号</el-menu-item>
+          <el-menu-item index="4-3" @click="Logout">注销</el-menu-item>
         </el-submenu>
       </div>
       <UserDialog
@@ -58,7 +60,7 @@ export default {
     return {
       activeIndex: "1",
       activeIndex2: "1",
-      input: "",
+      location: "",
       select: "",
       dialogVisible: false, // 控制登录注册弹框
     };
@@ -87,7 +89,9 @@ export default {
       const data = await logout();
       if (data) {
         this.$store.commit("del_token");
-        this.$router.go(0);
+        this.$store.commit("del_user");
+
+        this.$router.go("/");
       }
     },
     //添加新房源
@@ -98,6 +102,20 @@ export default {
       }else {
        this.$router.push("/newRoom")
       }
+    },
+    personInfo(){
+      this.$router.push("/personInfo")
+    },
+    getAccount(){
+      this.$router.push("/account")
+    },
+    searchLocation(){
+      this.$router.push({
+        path:"/roomSearch/",
+        query:{
+          location:this.location
+        }
+      })
     }
   },
   components: { UserDialog },

@@ -27,6 +27,10 @@ Vue.use(ElementUI);
 Vue.use(Antd);
 Axios.defaults.headers.common["Authentication-Token"] = null; //为头部设置新参数
 
+import {Message} from 'element-ui'
+Vue.prototype.$message=Message;
+
+
 router.beforeEach((to,from,next)=>{
   console.log(to);
   document.title = to.name

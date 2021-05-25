@@ -9,7 +9,9 @@
               <span class="demonstration"></span>
               <el-date-picker
                       :picker-options="pickerOptions"
+                      @change="getTimeList"
                       v-model="timeList"
+                      value-format="yyyy-MM"
                       type="monthrange"
                       range-separator="-"
                       start-placeholder="开始月份"
@@ -28,6 +30,8 @@
               <el-date-picker
                       :picker-options="pickerOptions1"
                       type="dates"
+                      @change="getBlockTime"
+                      value-format="yyyy-MM-dd"
                       v-model="blockTime"
                       :clearable="false"
                       placeholder="选择屏蔽日期">
@@ -46,7 +50,7 @@
               <span style="font-size: 14px !important;line-height: 18px !important;">这将是您的默认价格。</span>
             </div>
             <div style="margin-top: 10px;">
-              <el-input class="basePrice" v-model="basePrice" placeholder="请输入您的预期价格" ></el-input>
+              <el-input class="basePrice"@change="getBasePrice" v-model.number="basePrice" placeholder="请输入您的预期价格" ></el-input>
             </div>
 
           </div>
@@ -74,10 +78,17 @@
 
         pickerOptions: {
           disabledDate(time) {
+            let cyear = (new Date()).getFullYear();
+            let year = (new Date(time)).getFullYear();
             let cmonth = (new Date()).getMonth();
             let month = (new Date(time)).getMonth();
             // return time.getTime() < Date.now();
-            return month < cmonth;
+            if (year<cyear){
+              return true
+            } else if (year === cyear){
+              return month < cmonth ;
+            } else
+              return false
           }
         },
 
@@ -93,11 +104,25 @@
           disabledDate(time) {
             let beginTime = (new Date(that.timeList[0])).getTime();
             let endTime = (new Date(that.timeList[1])).getTime();
-            endTime = moment(endTime).add(1,"months");
-            return time.getTime() < beginTime || time.getTime() >= endTime || time.getTime()< Date.now();
+            endTime = moment(endTime).add(1,"months").subtract(1,"day");
+            return time.getTime() < beginTime || time.getTime() >= endTime || moment(time.getTime()).format("YYYY-MM-DD") < moment().format("YYYY-MM-DD");;
           }
         }
       },
+      getTimeList(){
+        console.log(this.timeList);
+        this.$store.state.roomInfo['timeList'] = this.timeList;
+        this.blockTime = []
+      },
+      getBlockTime(){
+        console.log(this.blockTime);
+        this.$store.state.roomInfo['blockTime'] = this.blockTime;
+      },
+      getBasePrice(){
+        console.log(this.basePrice);
+        this.$store.state.roomInfo['basePrice'] = this.basePrice;
+      }
+
       // scrollFun(){
       //   let s1 = document.getElementById("categoryDiv");
       //   let s2 = document.getElementById("locationDiv");

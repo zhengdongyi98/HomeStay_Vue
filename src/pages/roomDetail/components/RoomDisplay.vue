@@ -243,12 +243,13 @@
         </div>
       </div>
     </el-main>
-    <el-aside>
-      <a-affix :offset-top="top" style="margin-top: 15px">
+    <el-aside >
+      <a-affix :offset-top="top" style="margin-top: 15px" v-if="RoomDetailData.baseRoom['uId']!==this.$store.state.user['uId']">
         <BookingPanel
           :price="RoomDetailData.roomPrices"
           :basePrice="RoomDetailData.baseRoom.basePrice"
           :RoomDetailData="RoomDetailData"
+          :baseRoomData="RoomDetailData.baseRoom"
         />
       </a-affix>
     </el-aside>

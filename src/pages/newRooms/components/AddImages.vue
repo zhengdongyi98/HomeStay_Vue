@@ -128,63 +128,94 @@
         dialogImageUrl: '',
         dialogVisible: false,
         divName: "imageDiv",
-        fileLists: {'List1': [], 'List2': [], 'List3': [], 'List4': [], 'List5': []},
+        fileLists: { 'List1':[],'List2':[],'List3':[],'List4':[],'List5':[]},
+        // param: new FormData(),
       }
     },
     components: {
       tips
     },
     methods: {
-      handleFileChange1(file, fileList) {
-        this.fileLists.List1 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+      // handleFileChange1(file, fileList) {
+      //   fileList.forEach(
+      //       (val, index) => {
+      //         this.param.append("main-"+index, val.raw);
+      //       }
+      //   );
+      //   this.$store.state.roomInfo['fileList']=this.param;
+      //   console.log(this.param.get("main-0"));
+      //   console.log(this.$store.state.roomInfo['fileList'].get("main-0"));
+      // },
+      haha(){
+        this.param = new FormData();
+        this.$store.state.fileList = new FormData();
+        for(let i=0;i<this.fileLists.List1.length;i++){
+          this.param.append("main-"+i,this.fileLists.List1[i].raw);
+        }
+        for(let i=0;i<this.fileLists.List2.length;i++){
+          this.param.append("bed-"+i,this.fileLists.List2[i].raw);
+        }
+        for(let i=0;i<this.fileLists.List3.length;i++){
+          this.param.append("wash-"+i,this.fileLists.List3[i].raw);
+        }
+        for(let i=0;i<this.fileLists.List4.length;i++){
+          this.param.append("toilet-"+i,this.fileLists.List4[i].raw);
+        }
+        for(let i=0;i<this.fileLists.List5.length;i++){
+          this.param.append("other-"+i,this.fileLists.List5[i].raw);
+        }
+        this.$store.state.fileList = this.param;
+      },
+      handleFileChange1(file,fileList){
+        this.fileLists['List1'] = fileList;
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleFileChange2(file, fileList) {
-        this.fileLists.List2 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List2'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleFileChange3(file, fileList) {
-        this.fileLists.List3 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List3'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleFileChange4(file, fileList) {
-        this.fileLists.List4 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List4'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleFileChange5(file, fileList) {
-        this.fileLists.List5 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List5'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
 
       handleRemove1(file, fileList) {
-        this.fileLists.List1 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List1'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleRemove2(file, fileList) {
-        this.fileLists.List2 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List2'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleRemove3(file, fileList) {
-        this.fileLists.List3 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List3'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleRemove4(file, fileList) {
-        this.fileLists.List4 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List4'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handleRemove5(file, fileList) {
-        this.fileLists.List5 = fileList;
-        this.$store.fileList = this.fileLists;
-        console.log(this.$store.fileList);
+        this.fileLists['List5'] = fileList
+        this.$store.state.fileLists = this.fileLists
+        // this.haha()
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;

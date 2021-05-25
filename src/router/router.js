@@ -2,13 +2,16 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "../pages/home/Home.vue";
 import RoomDetail from "../pages/roomDetail/RoomDetail.vue";
-import CitySearch from "../pages/citySearch/CitySearch.vue"
+import CitySearch from "../pages/roomSearch/RoomSearch.vue"
 import NewRoom from "../pages/newRooms/NewRoom.vue"
 import AddBaseRoom from "../pages/newRooms/components/AddBaseRoom"
 import AddDetail from "../pages/newRooms/components/AddDetail"
 import AddImages from "../pages/newRooms/components/AddImages"
 import AddPrice from "../pages/newRooms/components/AddPrice"
 import store from "../store/store";
+import PersonInfo from "../pages/personInfo/PersonInfo";
+import Account from "../pages/personInfo/Account";
+import RoomSearch from "../pages/roomSearch/RoomSearch";
 
 Vue.use(Router);
 
@@ -40,9 +43,19 @@ export default new Router({
       component: RoomDetail,
     },
     {
-      path: "/citySearch/:cityName",
-      name: "citySearch",
-      component: CitySearch,
+      path: "/roomSearch",
+      name: "roomSearch",
+      component: RoomSearch,
+    },
+    {
+      path: "/personInfo",
+      name: "个人资料",
+      component: PersonInfo,
+    },
+    {
+      path: "/account",
+      name: "账号",
+      component: Account,
     },
     {
       path: "/newRoom",

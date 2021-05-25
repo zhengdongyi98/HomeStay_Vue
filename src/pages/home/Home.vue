@@ -5,13 +5,13 @@
         <NavMenu></NavMenu>
         <div style="display: flex; justify-content: center">
           <!-- <div class="search-area">NavSearch</div> -->
-          <div style="position: relative; top: 350px"><NavSearch /></div>
+          <div style="position: relative; top: 350px"><NavSearch/></div>
         </div>
       </el-header>
       <el-main style="display: flex; justify-content: center">
         <div style="width: 85%">
           <div style="margin: 15px 0px 30px 0px; font-weight: bolder">
-            <h2>春季特惠房源</h2>
+            <h2>夏季特惠房源</h2>
             <div>品质房源，低至 5 折</div>
           </div>
           <el-scrollbar class="SideBar-scrollbar">
@@ -31,7 +31,7 @@
             </el-row>
           </div>
           <div class="moreRoom">
-            <router-link :to="'/citySearch/'+ selectCity" tag="a"
+            <router-link :to="{path: '/roomSearch',query: {location: selectCity}}"  tag="a"
                          style="color: rgb(0, 132, 137) !important;">查看更多{{selectCity}}房源 ></router-link>
           </div>
         </div>
@@ -68,12 +68,15 @@ export default {
         this.$message.error("请先登录");
       } else {
         console.log(rId);
-        this.$router.push(`/roomDetail?id=${rId}`);
+        window.open("http://localhost:8080/#/roomDetail?id="+rId)
+        // this.$router.push(`/roomDetail?id=${rId}`);
       }
     },
   },
   created() {
     this.getData();
+    console.log("111111");
+    console.log(this.$store.state);
   },
   watch: {
     selectCity: function (newVal, oldVal) {

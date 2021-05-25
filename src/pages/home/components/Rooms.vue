@@ -9,7 +9,7 @@
     />
     <div class="text-container">
       <span class="category">
-        {{ cardData.category }}·{{ cardData.type }}·{{ cardData.capacity }}张床
+        {{ cardData.category }}·{{ cardData.type }}·{{ cardData.bedNumber }}张床
       </span>
       <div
         class="name"

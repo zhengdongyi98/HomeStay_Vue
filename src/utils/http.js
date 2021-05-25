@@ -41,7 +41,11 @@ export function get(url, params) {
             showClose: true,
             message: res.data.msg,
           });
-        }
+        }if (res.data.state ==="500"){
+          Message.error({
+            showClose: true,
+            message: res.data.msg,
+          });}
         // else {
         //   Message.error({
         //     showClose: true,
@@ -63,21 +67,30 @@ export function get(url, params) {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function post(url, params) {
+export function post(url, params, myHeader) {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${url}`, params)
+      .post(`${url}`, params, myHeader)
       .then((res) => {
         if(res.data.state === '1'){
           resolve(res.data);
         }
-        if (res.data.state ==="2" ||  res.data.state ==='3'||res.data.state ==='5'||res.data.state ==='6'||res.data.state ==='4'){
+        if (res.data.state ==="2" ||
+            res.data.state ==='3'||
+            res.data.state ==='5'||
+            res.data.state ==='6'||
+            res.data.state ==='4'){
           localStorage.removeItem("token");
           Message.error({
             showClose: true,
             message: res.data.msg,
           });
-        }
+          }
+        if (res.data.state ==="500"){
+          Message.error({
+            showClose: true,
+            message: res.data.msg,
+          });}
         // else {
         //   Message.error({
         //     showClose: true,

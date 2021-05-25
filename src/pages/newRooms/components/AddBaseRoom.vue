@@ -164,7 +164,7 @@
         map: "",
         detailAddress: "",//记录省市区--->组件内
         divName:"",
-        location:""//记录经纬度
+        locationLA:""//记录经纬度
       }
     },
     methods: {
@@ -180,7 +180,6 @@
         if (this.detailAddress==="") {
           this.detailAddress += this.$refs.citypicker.fullAddress;//获取子组件的数据
         }
-
       },
       scrollFun(){
         let s1 = document.getElementById("categoryDiv");
@@ -206,33 +205,41 @@
       var map = new AMap.Map("roomContainer", {
         resizeEnable: true,
         center: [116.397428, 39.90923],//地图中心点
-        zoom: 18,//地图显示的缩放级别
-        keyboardEnable: false
+        zoom: 14,//地图显示的缩放级别
+        keyboardEnable: false,
       });
-      var auto = AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+
+      let that = this;
+      var auto = AMap.plugin(['AMap.Autocomplete'],()=>{
         var autoOptions = {
           // 城市，默认全国
           city: "全国",
           // 使用联想输入的input的id
           input: "detailAddress"
         }
-        var autocomplete= new AMap.Autocomplete(autoOptions)
-        var placeSearch = new AMap.PlaceSearch({
-          city:'全国',
-          map: map,
-          type: '商务住宅|地名地址信息|商务住宅|住宿服务|风景名胜'
-        });
+        var autocomplete= new AMap.Autocomplete(autoOptions);
+        // var placeSearch = new AMap.PlaceSearch({
+        //   city:'全国',
+        //   map: map,
+        //   type: '商务住宅|地名地址信息|商务住宅|住宿服务|风景名胜'
+        // });
         AMap.event.addListener(autocomplete, 'select', function(e){
           //TODO 针对选中的poi实现自己的功能
-          // placeSearch.search(e.poi.name)
-          placeSearch.setCity(e.poi.adcode);
-          placeSearch.search(e.poi.name);
+          // placeSearch.search(e.poi.name);
+          // placeSearch.setCity(e.poi.adcode);
+          // placeSearch.setPageSize(5);
+          // placeSearch.search(e.poi.name);
           this.map = map;
-          console.log(e.poi.location.lat);//纬度
-          console.log(e.poi.location.lng);//经度
-          this.location = e.poi.location.lat+","+e.poi.location.lng;
-          this.$store.state.roomInfo['locationDetail']=this.location;//存入store
 
+          console.log(e.poi.location.lng);//经度
+          console.log(e.poi.location.lat);//纬度
+          that.locationLA = +e.poi.location.lng+","+e.poi.location.lat;
+
+          var marker = new AMap.Marker({
+            position: new AMap.LngLat(e.poi.location.lng,e.poi.location.lat)
+          });
+          map.add(marker);
+          map.setCenter([e.poi.location.lng,e.poi.location.lat]);
         })
       });
     },
@@ -241,6 +248,15 @@
     },
     created() {
       window.addEventListener("scroll",this.scrollFun);
+    },
+    watch:{
+      locationLA:{
+        handler:function(val, oldVal) {
+          this.$store.state.roomInfo['locationDetail'] = val;//存入store
+        },
+        deep:true,
+        immediate:true
+      }
     }
   }
 </script>

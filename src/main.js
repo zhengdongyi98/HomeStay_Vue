@@ -27,8 +27,10 @@ Vue.use(ElementUI);
 Vue.use(Antd);
 Axios.defaults.headers.common["Authentication-Token"] = null; //为头部设置新参数
 
-import {Message} from 'element-ui'
+import {Message,MessageBox} from 'element-ui'
+
 Vue.prototype.$message=Message;
+Vue.prototype.$confirm=MessageBox.confirm;
 
 
 router.beforeEach((to,from,next)=>{

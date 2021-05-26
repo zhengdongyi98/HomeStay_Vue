@@ -27,6 +27,20 @@
         {{ cardData.roomName }}
       </div>
       <div class="price">¥{{ cardData.basePrice }}</div>
+      <div class="score" style="margin-top: 10px;display: flex">
+        <div>
+          <el-rate
+                  :colors="scoreColor"
+                  v-model="getScore"
+                  disabled
+                  text-color="#ff9900"
+                  score-template="{value}">
+          </el-rate>
+        </div>
+        <div style="margin-left: 10px;">
+          <span style="font-weight: bolder;">{{cardData.num}}条评论</span>
+        </div>
+        </div>
     </div>
   </div>
 </template>
@@ -37,6 +51,8 @@ export default {
   data() {
     return {
       currentDate: new Date(),
+      scoreColor:['#00848a', '#00848a', '#00848a'],
+
     };
   },
   props: {
@@ -45,6 +61,15 @@ export default {
     },
   },
   methods: {},
+  computed:{
+    getScore(){
+      let score = this.cardData.score;
+      if (score===null){
+        return 0;
+      } else
+      return score;
+    }
+  }
 };
 </script>
 
@@ -52,6 +77,9 @@ export default {
 .card-container {
   height: 380px;
   width: 100%;
+}
+>>>.el-rate__icon{
+  font-size: 15px;
 }
 
 .text-container {

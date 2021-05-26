@@ -12,6 +12,10 @@ import store from "../store/store";
 import PersonInfo from "../pages/personInfo/PersonInfo";
 import Account from "../pages/personInfo/Account";
 import RoomSearch from "../pages/roomSearch/RoomSearch";
+import Default from "../pages/home/components/Default";
+import OrderCenter from "../pages/order/OrderCenter";
+import OrderDetail from "../pages/order/components/OrderDetail";
+import ContinuePay from "../pages/order/components/ContinuePay";
 
 Vue.use(Router);
 
@@ -57,6 +61,27 @@ export default new Router({
       name: "账号",
       component: Account,
     },
+    {
+      path: "/default",
+      name: "default",
+      component: Default,
+    },
+    {
+      path: "/orderCenter",
+      name: "房源订单中心",
+      component: OrderCenter
+    },
+    {
+      path:"/orderDetail",
+      name: "订单详情",
+      component: OrderDetail
+    },
+    {
+      path:"/continuePay",
+      name: "继续支付",
+      component: ContinuePay
+    },
+
     {
       path: "/newRoom",
       name: "成为房东",

@@ -73,13 +73,6 @@
         </el-row>
       </div>
     <el-container style="height: 100%;margin-top: 165px!important;margin-bottom: 40px!important;" v-loading="fullscreenLoading">
-      <el-header>
-        <div>
-          <span style="color: #000;font-weight: 600 !important;margin-bottom: 0px !important;font-size: 22px !important;line-height: 26px !important;">
-            {{condition}}
-          </span>
-        </div>
-      </el-header>
       <el-main>
         <div class="main-card-container">
           <el-row :gutter="20">

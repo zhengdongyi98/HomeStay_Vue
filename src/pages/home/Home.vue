@@ -45,7 +45,7 @@ import NavMenu from "../../components/TopNav/NavMenu";
 import Rooms from "./components/Rooms";
 import CitySelect from "./components/CitySelect";
 import NavSearch from "../../components/TopNav/NavSearch";
-import { getAllRooms } from "../../service/home";
+import { getAllRooms ,getHomeRooms} from "../../service/home";
 export default {
   name: "Home",
   data() {
@@ -57,8 +57,8 @@ export default {
   methods: {
     async getData() {
       // 这里请求
-      const res = await getAllRooms();
-      this.roomList = res.data;
+      const res = await getHomeRooms({'location':this.selectCity});
+      this.roomList = res.data.list;
     },
     setSelectCity(city) {
       this.selectCity = city;
@@ -68,8 +68,8 @@ export default {
         this.$message.error("请先登录");
       } else {
         console.log(rId);
-        window.open("http://localhost:8080/#/roomDetail?id="+rId)
-        // this.$router.push(`/roomDetail?id=${rId}`);
+        // window.open("http://localhost:8080/#/roomDetail?id="+rId)
+        this.$router.push(`/roomDetail?id=${rId}`);
       }
     },
   },
@@ -81,6 +81,7 @@ export default {
   watch: {
     selectCity: function (newVal, oldVal) {
       console.log(newVal); // 这里监听到选择城市的变化，发请求渲染当前选择的城市数据
+      this.getData()
     },
   },
   components: {

@@ -27,7 +27,7 @@
         <el-menu-item index="1"
           @click="handleAddNewRoom"
         >出租房源</el-menu-item>
-        <el-menu-item index="2">管理面板</el-menu-item>
+        <el-menu-item index="2" @click="orderCenter">房源订单中心</el-menu-item>
         <!-- <el-menu-item index="3" @click="handleUserDialogShow">注册</el-menu-item> -->
         <el-menu-item
           index="3"
@@ -91,7 +91,12 @@ export default {
         this.$store.commit("del_token");
         this.$store.commit("del_user");
 
-        this.$router.go("/");
+        if (this.$route.fullPath==='/'){
+          this.$router.go(0)
+        } else {
+          this.$router.push("/");
+        }
+
       }
     },
     //添加新房源
@@ -116,6 +121,9 @@ export default {
           location:this.location
         }
       })
+    },
+    orderCenter(){
+      this.$router.push("/orderCenter")
     }
   },
   components: { UserDialog },
@@ -173,6 +181,7 @@ export default {
 .el-input >>> .el-input__inner {
   /*vue组件编译后，会将 template 中的每个元素加入 [data-v-xxxx] 属性来确保 style scoped 仅本组件的元素而不会污染全局。
 一般还是不建议去除scoped，避免污染全局的样式。那就需要采用深度作用选择器*/
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   height: 48px;
   width: 480px;
   padding-left: 50px;

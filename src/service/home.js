@@ -5,6 +5,10 @@ export const getAllRooms = async (params) => {
   return get(`/room/getAllRooms`, qs.stringify(params));
 };
 
+export const getHomeRooms = async (params) => {
+  return get(`/room/getHomeRooms`,params);
+};
+
 // export const register = async (params) => {
 //   post(`/user/userRegister`, qs.stringify(params));
 // };
